@@ -21,3 +21,4 @@ objeto.processamento(); // Foco passou a ser o objeto
 //1 - Abstração
 //2 - Encapsulamento
 //3 - Herança (Prototype)
+//4 - Polimorfismo
