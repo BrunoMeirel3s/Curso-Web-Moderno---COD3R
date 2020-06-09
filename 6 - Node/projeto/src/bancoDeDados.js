@@ -26,7 +26,7 @@ function salvarProduto(produto){
     return produto
 }
 
-//retorna o produto de if informado na execução da função
+//retorna o produto de id informado na execução da função
 function getProduto(id){
     return produtos[id] || {}
 }
@@ -36,11 +36,19 @@ function getProdutos(){
     return Object.values(produtos)
 }
 
+//exclui um produto de id enviado como parametro
+function excluirProduto(id){
+    const produto = produtos[id]
+    delete produtos[id]
+    return produto
+}
+
 //module.exports deixa as funções visíveis para que outros módulos as possam utilizar
 module.exports = {
     salvarProduto,
     getProduto,
-    getProdutos
+    getProdutos,
+    excluirProduto
 }
 
 
