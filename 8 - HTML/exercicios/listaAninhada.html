@@ -1,0 +1,56 @@
+<h1>Projeto</h1>
+<ul class="tree">
+    <li>
+        <span wm-folder>Backend</span> 
+        <ul>
+            <li>
+                <span wm-folder>App</span>
+                <ul>
+                    <li>produto.js</li>
+                    <li>usuario.js</li>
+                    <li>venda.js</li>
+                </ul>
+            </li>
+            <li>
+                <span wm-folder>config</span>
+                <ul>
+                    <li>banco.js</li>
+                    <li>rotas.js</li>
+                    <li>servidor.js</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <span wm-folder>FrontEnd</span>
+        <ul>
+            <li>
+                <span wm-folder>public</span>
+                <ul>
+                    <li>app.css</li>
+                    <li>app.js</li>
+                    <li>index.html</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+<link rel="stylesheet" href="http://files.cod3r.com.br/curso-web/tree.css">
+<script>
+    /*
+        document.querySelectorAll busca todos os elementos que possuem
+        o atributo personalizado wm-folder e aplica um forEach em cima destes atributos
+        executando uma callback durante o onclick destes items
+    */
+    document.querySelectorAll('[wm-folder]').forEach(folder =>{
+        folder.onclick= function(e){
+            //ul recebe o elemento seguinte ao elemento clicado
+            const ul = folder.nextElementSibling
+            //d armazena o display atual do elemento ul acima
+            const d = ul.style.display
+            //usando um operador ternário é possível variar o estado do display
+            //se tiver visivel ele fica invisivel e vice versa
+            ul.style.display = d === 'none'? 'block': 'none'
+        }
+    })
+</script>
