@@ -1,6 +1,6 @@
 <h1>Links</h1>
 <!-- URL Absoluta-->
-<a href="http://www.google.com.br">Google 1</a><br>
+<a id="inicio" href="http://www.google.com.br">Google 1</a><br>
 <!--utilizando o atributo target="_blank" o nosso link será aberto em uma nova aba-->
 <a href="http://www.google.com.br" target="_blank">Google 2</a><br><br>
 
@@ -9,4 +9,20 @@
 <!--Utilizando o '/' iremos sempre acessar o nível raiz da aplicação-->
 <a href="/index.html">Voltar 2</a><br>
 <!--Utilzamos o ../ para sair de uma pasta podendo utiizar vários ../../-->
-<a href="../index.html">Voltar 3</a><br>
+<a href="../index.html">Voltar 3</a><br><br>
+
+<!--
+    Utilizando o mailto ao clicar no link o computador do usuário abre o gerenciador de e-mail do computador
+    Dando a opção de envio de um email para o email informado em questão
+-->
+<a href="mailto:brunomeireles23@gmail.com">Entre em contato</a><br><br>
+
+<div id="noticia" style="position: absolute; top: 2000px;">
+    <h1>Notícia Buemba!</h1>
+    <p>Não era nada...</p>
+    <!--Utilizando o conceito de âncora ao clica em inicio voltar para o começo da página-->
+    <a href="#inicio">Voltar Início</a>
+</div>
+
+<!--utilizando o # podemos criar âncoras para navegar dentro da própria página-->
+<a href="#noticia">Ir para Notícia</a>

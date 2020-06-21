@@ -1,0 +1,124 @@
+<div wm-slider>
+    <p>
+        <img src="http://files.cod3r.com.br/curso-web/imagem1.jpg"
+            alt="Muro da Cidade"
+            width="513" height="342"
+            title="Muro da Cidade por Tarso Bessa">
+    </p>
+    
+    <p>
+        <img src="http://files.cod3r.com.br/curso-web/imagem2.gif" alt="Intro Cod3r"
+        height="342">
+    </p>
+    
+    <p class="circular">
+        <img src="http://files.cod3r.com.br/curso-web/imagem3.png" 
+        alt="Rio de Janeiro"
+        width="342">
+    </p>
+    <p class="texto">
+        <img src="http://files.cod3r.com.br/curso-web/avatar.jpg" 
+        alt="Avatar" height="50" align="left">
+        dsdsdsdsdsdsds dwdwdw dwdwdw dwdw dwd w d wd  dwd wd w d 
+        f ef ef f efe f ewf ef e f efe fe wf ef ef e 23 32r 
+    </p>
+    
+    <p class="cidade"></p>
+    
+    <p>
+        <picture>
+            <source srcset="http://files.cod3r.com.br/curso-web/logo-larga.png"
+            media="(min-width: 600px)">
+            <img src="http://files.cod3r.com.br/curso-web/logo-estreita.png" alt="logo">
+        </picture>
+    </p>
+</div>
+
+<style>
+    p{
+        position: absolute;
+        display: none;
+    }
+    .circular{
+        width: 513px;
+        background-color: #444;
+    }
+    .texto{
+        width: 400px;
+    }
+
+    .texto img{
+        margin-right: 10px;
+    }
+    .cidade{
+        width: 513px;
+        height: 342px;
+        /*
+            Podemos inserir imagens utilizando o próprio CSS como no exemplo abaixo!
+        */
+        background-image: url('http://files.cod3r.com.br/curso-web/imagem4.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 200%;
+    }
+</style>
+
+<script>
+    /*
+        Function mover cuida do movimento de deslocação no eixo horizontal
+        recebendo como parametro o elemento a ser movimentado, o ponto de inicio da 
+        movimentação, o ponto final, o passo de deslocamento e uma callback
+    */
+    function mover(elem, inicio, fim, passo, callback){
+        //const novoInicio sempre irá decair recebendo um novo ponto de inicio e sendo decaído de acordo com o passo
+        const novoInicio = inicio - passo
+        if(novoInicio >= fim){
+            elem.style.left = novoInicio + 'px'
+            setTimeout(() => mover(elem, novoInicio, fim, passo, callback), 7)
+        }else{
+            //calback será chamada quando acabar a transição do slide
+            callback()
+        }
+    }
+
+   /* 
+    const p = document.querySelector('[wm-slider] > p')
+    p.style.display = 'block'
+    mover(p, 1500, -520, 5, ()=>{
+        console.log('Terminou!!!')
+    })
+   */
+  
+
+  function slider(){
+      //recupera todos os elementos com a tag 'p' no documento
+      const elementos = document.querySelectorAll('[wm-slider] > p')
+      //cria um vetor com os elementos recuperados
+      const slides = Array.from(elementos)
+      exibirSlides(slides, slides[0])
+  }
+
+  function exibirSlides(slides, slide){
+      slide.style.display = 'block'//torna o elemento visivel
+
+      const inicio = innerWidth//o inicio é o tamanho da largura da tela onde está sendo visualizado
+      const fim = -slide.clientWidth//fim é o tamanho do slide porém negativo
+
+      slide.style.left= `${inicio}px`
+
+
+      mover(slide, inicio, fim, 5, ()=>{
+          //Lembrando que está callback apenas é chamada quando o ultimo slide finalizar a transição
+          slide.style.display = 'none'
+          exibirSlides(slides, getProximo(slides, slide))
+      })
+  }
+
+  function getProximo(lista, atual){
+      //i recebe o indice atual + 1
+      const i = lista.indexOf(atual) + 1
+      return i < lista.length ? lista[i] : lista[0]
+  }
+
+  slider()
+</script>
