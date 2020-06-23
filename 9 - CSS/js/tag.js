@@ -35,7 +35,7 @@ document.querySelectorAll('.tag').forEach(box=> {
         Verifica se na tag atual existe uma classe chamada noLabel, caso
         houver não será aplicado os efeitos dentro do bloco if
     */
-    if(!box.classList.contains('noLabel')){
+    if(!box.classList.contains('nolabel')){
         //label recebe a criação de um novo elemento do tipo label que é um 'rótulo'
         const label = document.createElement('label')
 
