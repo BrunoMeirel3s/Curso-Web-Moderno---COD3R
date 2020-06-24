@@ -5,12 +5,63 @@
     <meta charset="UTF-8">
     <title>Display</title>
     <style>
-        /* ... */
+        body{
+            font-size: 40px;
+            color: white;
+            background-color: coral;
+        }
+
+        ul{
+            padding: 0px;
+        }
+        div{
+            background-color: seagreen;
+        }
+        span{
+            background-color: dodgerblue;
+        }
+        li{
+            background-color: purple;
+        }
+
+        div, span, li{
+            width: 50%;
+            width: 200px;
+            height: 80px;
+            padding-top: 30px;
+            text-align: center;
+
+            /*
+                Com o display:block os elementos possuem
+                sua própria linha, sendo assim os demais elementos
+                irão para baixo
+            */
+            display: block;
+
+            /*
+                Com o display inline é ignorado a largura
+                e a altura dos elementos e os elementos ficam
+                na mesma linha
+            */
+            display: inline;
+
+            /*
+                Com o display: inline-block podemos utilizar
+                a largura e a altura e os elementos ficam
+                na mesma linha
+            */
+            display: inline-block;
+        }
     </style>
 </head>
 
 <body>
     <div>Texto 1</div>
+    <!--
+        span por padrão não aceita atributos height e 
+        width, porém ao trocarmos o display do span para
+        block ele passa a reconhecer estes atributos
+    -->
     <span>Texto 2</span>
     <span>Texto 3</span>
     <ul>
