@@ -4,8 +4,35 @@
     <meta charset="UTF-8">
     <title>Tamanho Box</title>
     <style>
+        *{
+            /*
+             box-sizing: border-box;
+             dessa forma colocamos o border-box para todo
+             o documento
+            */
+        }
         body {
             font-size: 45px;
+            margin: 0;
+        }
+        div{
+            background-color: deepskyblue;
+            width: 100%;
+            height: 300px;
+            padding: 100px;
+            border: solid 20px;
+            /*
+                Utilizando o box-sizing: content-box
+                o nosso elemento irá utilizar 100% da viewport
+                porém seu padding e sua borda irão estourar
+                o limite de 100%
+            */
+            /*
+                Utilizand o box-sizing: border-box também é considerado
+                o border e o padding na hora de ocupar a viewport
+                sendo assim não irá estourar o viewport
+            */
+            box-sizing: border-box;
         }
     </style>
 </head>

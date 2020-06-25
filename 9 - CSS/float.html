@@ -11,27 +11,49 @@
 
         .c1 {
             background-color: red;
+            /*
+                a propriedade float é utilizada para fazermos
+                o elemento flutuar na tela dessa forma podemos
+                escolhe entre flutação esquerda ou direita
+            */
+            float: right;
         }
 
         .c2 {
             background-color: green;
+            /*
+                Usando o clear levamos em consideração
+                a linha de outros elementos que estão funcionando
+            */
+            clear:right;
+            float: left;
         }
         
         .c3 {
             background-color: blue;
+            clear: both;
+            float: right;
         }
 
         .c4 {
             background-color: orange;
+            float: left;
+            clear: both;
+        }
+
+        div{
+            height: 150x;
+            width: 150px;
+            /*float: right;*/
         }
     </style>
 </head>
 
 <body>
-    <div class="c1"></div>
-    <div class="c2"></div>
-    <div class="c3"></div>
-    <div class="c4"></div>
+    <div class="c1">1 </div>
+    <div class="c2">2 </div>
+    <div class="c3"> 3</div>
+    <div class="c4"> 4</div>
 </body>
 
 </html>
