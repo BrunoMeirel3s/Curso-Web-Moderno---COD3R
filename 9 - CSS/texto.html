@@ -10,11 +10,67 @@
         * {
             margin: 0;
         }
+        html{
+            font-size: 28px;
+        }
 
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+        div{
+            font-size: 50px;
+        }
+        p{
+            /*Valores padrões*/
+            font-size: 1em;
+            font-size: 100%;
+            font-size: 16px;
+            font-size: 12pt;
+            
+
+            /*unidades absolutas*/
+            font-size: 100px;/*tamanho do pixel é relativo*/
+            font-size: 72pt;/*pontos*/
+            font-size: 1in;/*polegada*/
+
+            /*unidades relativas*/
+            font-size: 2.2em;/*em utiliza a referência de fonte mais próxima*/
+            font-size: 2.2rem;/*rem utiliza a referência de fonte do html*/
+            font-size: 50vh;
+            font-size: 10vw;
+
+            font-family: monospace;
+            font-family: Georgia, serif;
+            font-family: Verdana, sans-serif;
+            font-family: 'Indie Flower', cursive;
+
+            font-weight: 100;/*Espessura varia até 900*/
+            font-style: italic;/*negrito, italico*/
+            text-transform: uppercase;/*text transfome aplica transformações no texto*/
+            /*text-decoration: overline underline line-through;*/
+            word-spacing: 10px;/*espaçamento entre as palavras*/
+            letter-spacing: 20px;/*espaçamento entre as letras*/
+            line-height: 2.5em;/*altura da linha*/
+            text-align: right;/*Alinhamento do texto*/
+
+        }
+        .botao{
+            font-size: 28px;
+            text-decoration: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+        }
+        .destaque{
+            color: white;
+            background-color: tomato;
+            box-shadow: 2px 2px 1px 1px black;
+        }
+        
+        /*.destque:active é ativado durante o click no botão*/
+        .destaque:active{
+            box-shadow: none;
         }
     </style>
 </head>
