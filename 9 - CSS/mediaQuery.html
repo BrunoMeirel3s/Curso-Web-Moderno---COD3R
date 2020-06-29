@@ -12,6 +12,28 @@
             border: solid 5px;
             display: none;
         }
+
+        /*
+            Media querys são utilizadas para exibir ou não 
+            determinados elementos de acordo com o tamanho
+            do display atual, podemos utilizar max-width ou
+            min-width para para filtrar
+        */
+        @media(max-width: 600px){
+            .muito-pequeno{ display: block;}
+        }
+        /*
+            no atributo orientation podemos utilizar portrait
+            ou landscape para realizarmos um filtro por orientação
+            do dispositivo
+        */
+        @media(max-width:1000px),(orientation: portrait){
+            .pequeno-retrato{display: block;}
+        }
+
+        @media(min-width: 500px) and (max-width: 1000px){
+            .intervalor{display: block;}
+        }
     </style>
 </head>
 <body>
