@@ -22,6 +22,61 @@
             border: solid 5px dodgerblue;
             background: #fff;
         }
+
+        body{
+            /*
+                Display grid trabalho com linhas e colunas, onde podemos definir a 
+                largura e altura de cada coluna ou linha, ou colocar um tamanho
+                igual para todos
+            */
+            display: grid;
+            grid-template-columns: 50% 50%;/*Cria duas colunas dividindo o tamanho*/
+            /*
+                O comando repeat repete o tamanho para a quantidade de elementos
+                informados no comando
+            */
+            grid-template-columns: repeat(4, 8.33% 8.33% 8.33%);
+            grid-template-columns: repeat(4, 8.33%);
+            grid-template-columns: repeat(12, 8.33%);
+            grid-template-columns: repeat(11, 100px) 100px;/*criando 11 colunas de 100px e mais um de 100px*/
+            /*minmax(100px, 300px)*/
+            grid-template-columns: 200px 20% 1fr;
+
+            /*  
+                Podemos utilizar a unidade 'fr' para definirmos fração de tamanhos
+                igual o bootstrap com display grid de 12 colunas
+            */
+            grid-template-columns: 3fr 6fr 3fr;
+            /*
+                grid-template-rows  define a largura das linhas, podemos
+                criar a quantidade de linhas que quisermos e ajustarmos
+                o tamanho individual de cada uma ou aplicar um mesmo
+                tamanho para todas elas
+            */
+            grid-template-rows: 50% 25% 12.5% 12.5%;
+            grid-template-rows: 100px 1fr;
+            grid-template-rows: 100px auto;/*Definimos uma linha com altura de 100px e as demais serão ajustadas automaticamente*/
+        }
+
+        .d8{
+            grid-column-start: 2;
+            grid-column-end: 4;
+            grid-column-end: span 2;
+            grid-row-start: 2;
+            grid-row-end: 5;
+            grid-row-end: span 2;
+        }
+        .d10, .d11{
+            /*Podem se sobrepor*/
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 5;
+            grid-row-end: span1;
+        }
+
+        .d10{
+            z-index:-1;
+        }
     </style>
 </head>
 
