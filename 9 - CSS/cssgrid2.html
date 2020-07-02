@@ -20,6 +20,40 @@
             border: solid 5px dodgerblue;
             background: #fff;
         }
+
+        body{
+            display: grid;
+            /*
+                Podemos colocar apelidos nas colunas afim de facilitar
+                a utilização dos comandos grid-column e grid-row
+            */
+            grid-template-columns: [inicio]1fr [metade-1 meio-1]
+                                   [metade-2 meio-2]1fr [fim]1fr;
+            grid-template-rows: repeat(3, 1fr);
+        }
+
+        .d1{
+            grid-column-start: metade-2 ;/*grid column começa da coluna metade-2*/
+            grid-column-end: fim;/*grid column termina na coluna fim*/
+            grid-column: meio-1 / fim;/*shortcut que nos permite utilizara inicio e fim da column*/
+            grid-row:1 / span 2;/*shortcut que nos permite utilizar inicio e fim da row*/
+
+            /*
+                grid-area nos permite criar uma área informando em 
+                um só comando a linha de inicio, coluna de inicio, linha
+                de fim e coluna de fim
+            */
+            /*row-start column-start row-end column-end*/
+            grid-area: 1 / meio-1 / span 3 / fim;
+
+            /*
+                gap cria um espaçamento entre as células
+            */
+            grid-column-gap: 20px;
+            grid-row-gap: 20px;
+            grid-gap: 50px 10px;/*linhas x colunas*/
+            grid-gap: 10px;/*aplica na linha e na coluna*/
+        }
     </style>
 </head>
 

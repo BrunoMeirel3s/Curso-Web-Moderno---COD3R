@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Selecionar Elementos #01</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body class="conteudo exercicio">
+    <div id="primeiro">#primeiro</div>
+    <div>Segundo</div>
+    <div class="terceiro ultimo">.terceiro .ultimo</div>
+    <script>  
+        /*
+            document.getElementById nos permite encontrar um elemento
+            pelo id e então usa-lo, como no exemplo abaixo onde
+            usando o atributo classList estamos adicionando uma 
+            classe ao elemento
+        */            
+        document.getElementById('primeiro').classList.add('destaque')
+
+        /*
+            document.getElementsByTagName nos permite encontrar
+            elementos utilizando sua tag em questão, sendo assim
+            iremos obter um vetor html que precisa ser convertido em vetor
+            array para então utiliza-lo em nosso código
+        */
+        const divs = document.getElementsByTagName('div')
+        /*
+            Array.from() cria um array utilizando o vetor html, após isso
+            aplicamos um forEach para cada elemento do vetor e então
+            retiramos a classe 'destaque'
+        */
+        Array.from(divs).forEach(e=>{e.classList.remove('destaque')})
+
+        const divsArray = [...divs]/*Outra forma de criar um  vetor com um vetor HTML*/
+        divsArray.forEach(e=>{e.classList.add('destaque')})
+
+        /*
+            document.getElementsByClassName nos permite encontrar elementos
+            de acordo com sua classe e também cria um retorno do tipo vetor HTML
+            sendo assim precisamos converter este vetor ou percorre-lo
+            utilizando um for of por exemplo
+        */
+        const ultimosElementos = document.getElementsByClassName('ultimo')
+        for(let e of ultimosElementos){
+            e.classList.remove('destaque')
+        }
+    </script>
+</body>
+</html>

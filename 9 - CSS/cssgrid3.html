@@ -6,7 +6,65 @@
     <title>CSS Grid #03</title>
     <link rel="stylesheet" href="css/tag.css">
     <style>
-        /* ... */
+        *{
+            padding:0;
+            margin: 0;
+        }
+
+        /*
+            Usando o grid-area podemos criar um nome personalizado
+            para o chamar as tags como no exemplo abaixo: header,
+            nav, main e footer estão recebendo um nome que será
+            utilizado para inseri-los na página
+        */
+        header{
+            grid-area: cabecalho;
+        }
+
+        nav{
+            grid-area: navegacao;
+        }
+
+        main{
+            grid-area: conteudo;
+        }
+
+        footer{
+            grid-area: rodape;
+        }
+
+        body{
+            display: grid;
+            min-height: 100vh;
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: 100px 1fr 100px;
+            /*
+                grid-template-areas nos permite criar a estrutura
+                da página web chamando apenas os nomes do itens e onde
+                irão ficar usando o esquema de linha e coluna
+            */
+            grid-template-areas: 
+                'cabecalho cabecalho'
+                'navegacao conteudo'
+                'rodape rodape';
+        }
+
+        /*
+            Usando media query podemos personalizar a exibição 
+            dos elementos de uma forma mais fácil utilizando o 
+            grid-template-areas
+        */
+        @media(max-width: 700px){
+            body{
+                grid-template-columns: 1fr;
+                grid-template-rows: 80px 80px 1fr 100px;
+                grid-template-areas: 
+                    'navegacao'
+                    'conteudo'
+                    'rodape';
+            }
+            header{display: none;}
+        }
     </style>
 </head>
 
