@@ -22,7 +22,41 @@
         <p>Fim</p>
     </div>
     <script>
-        // ...
+        /*
+            Lembrando que usando o this em uma function 
+            o this irá apontar para quem chamar a função
+        */
+        function log(){
+            console.log(this)
+        }
+
+        /*
+            Aplicando o log no prototype  dos vetores
+            que podem ser retornados quando usamos as querys
+        */
+        HTMLCollection.prototype.log = log
+        HTMLElement.prototype.log = log
+        NodeList.prototype.log = log
+        Node.prototype.log = log
+
+        const lista = document.querySelector('div ul')
+        lista.parentNode.log()//seleciona a tag Pai, no nosso caso é a div que contém a lista
+        lista.childNodes.log()//seleciona os elementos da lista
+
+        const primeiro = lista.firstChild //seleciona o primeiro child
+        primeiro.log()
+        primeiro.nextSibling.log()//seleciona o próximo elemento irmão
+
+        const ultimo = lista.lastChild//seleciona o último elemento
+        ultimo.log()
+        ultimo.previousSibling.log()//seleciona o elemento irmão anterior
+
+        lista.children.log()//seleciona todos os elementos
+        lista.firstElementChild.log()//seleciona o primeiro elemento de fato, excluindo textos
+        lista.parentNode.previousElementSibling.log()//seleciona o elemento anterior, excluindo textos
+        lista.parentNode.nextElementSibling.log()//seleciona o próximo elemento, excluindo o anterior
+
+        document.querySelectorAll('div ul li').log()
     </script>
 </body>
 

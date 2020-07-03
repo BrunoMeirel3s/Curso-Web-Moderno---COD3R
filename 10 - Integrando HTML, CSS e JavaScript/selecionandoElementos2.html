@@ -9,8 +9,44 @@
     <div id="primeiro">#primeiro</div>
     <div>Segundo</div>
     <div class="terceiro ultimo"><span wb-attrib>.terceiro .ultimo</span></div>
-    <script>              
-        // ...
+    <script> 
+
+        /*
+            querySelector é utilizado para selecionar elementos na DOM
+            por ser possível selecionar mais de um tipo de elemento é importante
+            indicar se o elemento é um id, classe, tag ou atributo personalizado,
+            é importante lembrar que o querySelector seleciona apenas um elementos
+            por vez
+        */             
+        document.querySelector('#primeiro').classList.add('destaque')
+
+        /*
+            const selecionar recebe um função anônima que utiliza o querySelectorAll
+            para procurar elementos na DOM, por poder trazer mais de um elemento o retorno
+            de querySelectorAll é um nodeList que pode ser percorrido utilizando um forEach
+        */
+        const selecionar = seletor =>
+            document.querySelectorAll(seletor).forEach(e => e.classList.add('destaque'))
+
+        const deselecionar = seletor =>
+            document.querySelectorAll(seletor).forEach(e => e.classList.remove('destaque'))
+
+        selecionar('div')
+
+        deselecionar('*')//* representa todos os elementos da DOM
+        selecionar('.terceiro.ultimo')//seleciona duas classes, o elemento precisa possuir as duas para ser selecionado
+
+        deselecionar('*')
+        selecionar(':not(#primeiro)')//seleciona todos os elementos exceto o informado entre parênteses
+
+        deselecionar('*')
+        selecionar(':nth-child(1)')//seleciona o primeiro filho de qualquer elemento
+
+        deselecionar('*')
+        selecionar('div:nth-of-type(1)')//seleciona o primeiro elemento do tipo div
+
+        deselecionar('*')
+        selecionar('[wb-attrib]')//utilizamos [] para selecionar elementos personalizados
     </script>
 </body>
 </html>

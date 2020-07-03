@@ -15,7 +15,35 @@
         <img src='http://files.cod3r.com.br/curso-web/logo-estreita.png' alt='logo'>
     </div>
     <script>
-        // ...
+
+        const img = document.querySelector('img')
+        /*
+            getAttibute retorna o valor do atributo selecionado
+        */
+        console.log('getAttribute', img.getAttribute('src'))
+        console.log('src', img.src)//outra forma de acessar o elemento
+        console.log('["src"]', img['src'])//outra forma de acessar o elemento
+        console.log('alt', img.alt)
+
+        console.log('Elemento "img".................')
+        console.log('NodeType', img.nodeType)
+        console.log('Nodename', img.nodeName)
+
+        const src = img.getAttributeNode('src')
+        console.log('Atributo "src".................')
+
+        /*
+            Nós são os elementos em sí que dentro da DOM podem ser conhecidos como nós
+        */
+        console.log('NodeType', src.nodeType)//NodeType retona o tipo do elemento 1, 2, 3.... devemos pesquisar o tipo retornado
+        console.log('NodeName', src.nodeName)//NodeName nos retorna o tipo do elemento, a tag
+        console.log('NodeValue', src.nodeValue)//Nos retorna o value do nó
+
+        const link = document.querySelector('a')
+        console.log('Elemento "a"................')
+        console.log('href', link.href)
+        console.log('firstChild.nodeType', link.firstChild.nodeType)//nos retorna o tipo do NodeType do primeiro elemento filho 
+        link.firstChild.nodeValue = 'Novo Texto'//Altera o value do primeiro elemento filho ao link, no caso o texto de exibição
     </script>
 </body>
 

@@ -31,7 +31,32 @@
         <button>Pesquisar</button>
     </form>
     <script>
-        // ...
+        /*
+            document.forms seleciona todos os formulários presentes
+            na DOM ou podemos selecionar um específico utilizando []
+        */
+        console.log(document.forms)
+        console.log(document.forms[0])
+        /*
+            document.getElementsByName retorna um nodeList
+            com os elementos encontrados
+        */
+        console.log(document.getElementsByName('pesquisa'))
+
+        /*
+            Podemos também pesquisar pelo name utilizando a notação
+            '.' como abaixo
+        */
+        console.log(document.pesquisa)
+        console.log(document.pesquisa.q)
+
+        /*
+            utilizando o value dos atributos podemos mudar
+            seus valores
+        */
+        document.pesquisa.q.value = 'Linux Brasil'
+        document.pesquisa.hl.value = 'en-us'
+        console.log(document.pesquisa.hl.selectedIndex)
     </script>
 </body>
 
