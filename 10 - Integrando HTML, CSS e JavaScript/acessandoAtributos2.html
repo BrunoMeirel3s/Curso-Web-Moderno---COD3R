@@ -17,7 +17,31 @@
         </ul>
     </div>
     <script>
-        // ...
+        //forma diferente de acessar um elemento, mais específico possível
+        const lista = document.querySelector('div ul[destino="escritório"]')
+        console.log('Elemento "ul".................')
+        console.log('childNodes', lista.childNodes)//retorna os elementos da lista
+        console.log('destino', lista.destino)
+        console.log('getAttribute', lista.getAttribute('destino'))
+        console.log('hasAttribute', lista.hasAttribute('destino'))
+        lista.setAttribute('destino', 'empresa')//setAttribute seta o valor de atributos ou cria novos atributos
+        lista.setAttribute('status', 'aberto')//criando novo atributo via setAttribute
+        lista.removeAttribute('destino')
+        /*
+            Atributos personalizados que iniciem com 'data-'
+            ficam disponíveis em um vetor chamado dataset,
+            abaixo demonstra duas forma de acessar esse atributo
+        */
+        console.log(lista.dataset.urgencia)
+        lista.dataset.urgencia = 4
+        console.log(lista.getAttribute('data-urgencia'))
+
+        //cuidado
+        const label = document.querySelector('label')
+        console.log(label.for)//palavra reservada for não pode ser acessada por '.'
+        console.log(label.htmlFor)//forma correta de acessar o atributo for
+        console.log(label.getAttribute('for'))//forma correta de acessar o atributo for
+
     </script>
 </body>
 

@@ -9,7 +9,49 @@
 
 <body class='conteudo exercicio'>
     <script>
-        // ...
+        const body = document.querySelector('body')
+
+        /*
+            createElement nos permite criar um elemento especificado entre parenteses
+            para ser inserido na DOM
+        */
+        const div1 = document.createElement('div')
+        div1.classList.add('destaque')//adicionamos uma classe a lista de classes do elemento
+        div1.innerHTML = 'Primeiro'//innerHTML nos permite alterar o que fica dentro da tag html
+        
+        const div2 = document.createElement('div')
+        div2.setAttribute('wm-atributo', 'valor')//adiciona o elemento personalizado: wm-atributo = valor
+        div2.innerHTML = 'Segundo'
+
+        const p = document.createElement('p')
+        p.innerHTML = 'Terceiro'
+        const div3 = document.createElement('div')
+        div3.appendChild(p)
+
+        /*
+            appendChild nos permite adicionar um elemento html no final da lista
+            de elementos de outro elemento html, como por exemplo adicionar
+            div's no body de um documento html:
+        */
+        body.appendChild(div1)
+        body.appendChild(div2)
+        body.appendChild(div3)
+
+        const texto = document.createTextNode('Antes...')
+
+        /*
+            insertBefore nos permite escolher a posição que iremos inserir o
+            elemento, para isso informamos qual elemento será inserido
+            e na frente de quem ele ficará. No exemplo abaixo estamos adicionando
+            um texto na div na frente de seu primeiro elemento usamos o childNodes
+            para especificar a posição do elemento
+        */
+        div3.insertBefore(texto, div3.childNodes[0])
+
+        const div4 = div3.cloneNode(true)//cloneNode nos permite clonar um elemento, true ou false informa se iremos copiar os filhos do elemento
+        body.appendChild(div4)
+        body.removeChild(div3)
+
     </script>
 </body>
 
