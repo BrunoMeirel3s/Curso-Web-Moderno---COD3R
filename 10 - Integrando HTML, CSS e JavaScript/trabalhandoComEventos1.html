@@ -9,9 +9,41 @@
 
 <body class="conteudo exercicio">
     <div>
-        <a href="https://google.com.br">Google</a>
+        <!--
+            Podemos chamar uma função javascript durante a
+            alguma ação do elemento, no exemplo abaixo poderiamos
+            chamar no onclick()
+        -->
+        <!--onclick="navegarEm5s(event)"-->
+        <a espera-um-pouco href="https://google.com.br" >Google</a>
     </div>
     <script>
-        // ...
+        function navegarEm5s(e){
+            /*
+                preventDefault elimina os comportamentos
+                padrões de um evento, no exemplo em questão
+                estamos eliminando a ação de redirecionamento
+                de um link html
+            */
+            e.preventDefault()
+            console.log('Sando e 5s...')
+
+            setTimeout(()=>{
+
+                const link = e.target //adiciona o alvo do click a constante link
+                window.location.href = link.href //redireciona a página para o href da constante link
+            }, 5000)
+        }
+
+        //const a = document.querySelector('a')
+        //a.onclick = navegarEm5s
+
+        /*
+            Trabalhando com atributos personalizados fica mais
+            fácil identificar que estamos aplicando funções JavaScript aos
+            elementos
+        */
+        const a = document.querySelector('[espera-um-pouco]')
+        a.onclick = navegarEm5s
     </script>
 </body>

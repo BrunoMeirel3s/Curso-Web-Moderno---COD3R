@@ -45,7 +45,35 @@
     </div>
     <div class="direita" wm-dropzone></div>
     <script>
-        // ...
+        const itens = document.querySelectorAll('[wm-dropzone] .item')
+        itens.forEach((item, index)=>{
+            item.draggable = true//torna o elemento possível de ser arrastado
+            item.id = item.id || `draggable-item-${index}`//caso o elemento não possua id será criado uma id com base na posição do elemento no vetor
+            /*
+                Ao iniciar a movimentação a id do item é adicionada a um vetor chamado dataTransfer
+                isso que irá nos permitir depois colocar esse item na dropzone de destino
+            */
+            item.ondragstart = e =>
+                e.dataTransfer.setData('item-id', e.target.id)
+        })
+
+        const dropzones = document.querySelectorAll('[wm-dropzone]')
+        dropzones.forEach(dropzone => {
+            dropzone.ondragover = e => e.preventDefault()
+            dropzone.ondrop = function(e){
+                //id recebe o id do item que está em movimentação e foi inserido em dataTransfer
+                const id = e.dataTransfer.getData('item-id')
+
+                /*
+                    como obtivemos o id do item que está sendo movimentado podemos
+                    encontrar o elemento em questão pelo id e então
+                    adcionarmos esse elemento como appendChild da dropzone
+                */
+                const item = document.getElementById(id)
+                //e.target.appendChild(item)
+                dropzone.appendChild(item)
+            }
+        })
     </script>
 </body>
 
