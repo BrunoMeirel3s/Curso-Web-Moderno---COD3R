@@ -31,6 +31,43 @@
         <button wm-submit>Pesquisar</button>
     </form>
     <script>
-        // ...
+        /*
+        Utilizando o submit do botão para enviar o formulário
+
+        const submit = document.querySelector('[wm-submit]')
+        submit.onclick = function(e){
+            e.preventDefault()
+
+            const form = e.target.parentNode
+            const formData = new FormData(form)
+            formData.append('Ajax', true)
+            console.log(formData.get('q'))
+            console.log(formData.has('hl'))
+
+            for(let dado of formData){
+                console.log(dado)
+            }
+        }
+        */
+
+        //Utilizando o submit do formulário
+        const form = document.forms[0]
+        form.onsubmit = function(e){
+            e.preventDefault()//evita o recarregamento da página
+            const form = e.target//pega o formulário em si
+            const formData = new FormData(form)//instância uma constante que possuirá todos os valores do formulário
+            formData.append('Ajax', true)//adiciona Ajax como um valor do formulário
+            console.log(formData.get('q'))//exibe o valor de 'q'
+            console.log(formData.has('hl'))//verifica se existe o campo 'h1'
+
+            /*
+                For abaixo percorre o formData exibindo todos
+                os elementos presentes no vetor
+            */
+            for(let dado of formData){
+                console.log(dado)
+            }
+        }
+
     </script>
 </body>
