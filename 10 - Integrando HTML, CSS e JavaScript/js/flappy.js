@@ -126,9 +126,15 @@ function Barreiras(altura, largura, abertura, espaco, notificarPonto) {
                 par.sortearAbertura()//sortea uma nova abertura para fazer o jogo dinamico
             }
 
+
             const meio = largura / 2
+            /**
+             * const cruzouMeio será true se a posição atual do elemento + deslocamento
+             * for maior do que o meio, sendo assim irá assionar o if
+             */
             const cruzouMeio = par.getX() + deslocamento >= meio
                 && par.getX() < meio
+
             if (cruzouMeio) notificarPonto()
         })
     }
@@ -143,13 +149,24 @@ function Passaro(alturaJogo) {
     this.getY = () => parseInt(this.elemento.style.bottom.split('px')[0])
     this.setY = y => this.elemento.style.bottom = `${y}px`
 
+    //onkeydown é utilizado para verificar se a tecla está pressionada
     window.onkeydown = e => voando = true
+    //onkeyup é utilizado para verificar se a tecla foi solta
     window.onkeyup = e => voando = false
 
     this.animar = () => {
+        /**
+         * novoY será igual o y atual + voando true ou false, se for
+         * true será adicionado 8px no y atual, se for false será 
+         * retirado 5px
+         */
         const novoY = this.getY() + (voando ? 8 : -5)
         const alturaMaxima = alturaJogo - this.elemento.clientHeight
 
+        /**
+         * If abaixo é utilizado para verificar se o passaro irá passar os limites da 
+         * tela do jogo
+         */
         if (novoY <= 0) {
             this.setY(0)
         } else if (novoY >= alturaMaxima) {
@@ -161,13 +178,95 @@ function Passaro(alturaJogo) {
 
     this.setY(alturaJogo / 2)
 }
-const barreiras = new Barreiras(700, 1200, 400, 400)
-const passaro = new Passaro(700)
-const areaDoJogo = document.querySelector('[wm-flappy]')
 
-areaDoJogo.appendChild(passaro.elemento)
-barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento))
-setInterval(() => {
-    barreiras.animar()
-    passaro.animar()
-}, 20)
+
+function Progresso(){
+    this.elemento = novoElemento('span', 'progresso')
+    this.atualizarPontos = pontos =>{
+        this.elemento.innerHTML = pontos
+    }
+}
+
+function EstaoSobrePostos(elementoA, elementoB){
+    /**
+     * getBoundingClientRect() obtém o retangulo que envolve
+     * o elemento em questão
+     */
+    const a = elementoA.getBoundingClientRect()
+    const b = elementoB.getBoundingClientRect()
+
+    /**
+     * horizontal será true se a distância até o elementoA pelo lado esquerdo
+     * + a largura do elementoA for maior do que a distância esquerda até o elementoB e vice versa
+     */
+    const horizontal = a.left + a.width >= b.left
+        && b.left + b.width >= a.left
+
+    /**
+     * vertical será true se a distância até o elementoA de baixo pra cima
+     * + a altura do elementoA for maior do que a distância de baixo pra cima até o elementoB e vice versa
+     */
+    const vertical = a.top + a.height >= b.top
+        && b.top + b.height >= a.top    
+
+    return horizontal && vertical    
+}
+
+//colidiu recebe os elementos que irá testar se colidem
+function Colidiu(passaro, barreiras){
+    let colidiu = false
+    barreiras.pares.forEach(parDeBarreiras => {
+        if(!colidiu){
+            const superior = parDeBarreiras.superior.elemento
+            const inferior = parDeBarreiras.inferior.elemento
+
+            /**
+             * colidiu testa se o passaro sobrepõem-se com as
+             * barreias infeior ou superior
+             */
+            colidiu = EstaoSobrePostos(passaro.elemento, superior)
+                || EstaoSobrePostos(passaro.elemento, inferior)
+        }
+    })
+
+    return colidiu
+}
+
+function FlappyBird(){
+    let ponto = 0
+    const areaDoJogo = document.querySelector('[wm-flappy]')//recebe a area do jogo
+    const altura = areaDoJogo.clientHeight
+    const largura = areaDoJogo.clientWidth
+
+    const progresso = new Progresso()
+    /**
+     * progresso.atualizarPontos é chamado na função barreiras
+     * como a função notificarPontos, sendo assim é executada
+     * quando o passaro cruza a metade da tela
+     */
+    const barreiras = new Barreiras(altura, largura, 200, 400, 
+        () => progresso.atualizarPontos(++ponto))
+    const passaro = new Passaro(altura)
+
+    areaDoJogo.appendChild(progresso.elemento)
+    areaDoJogo.appendChild(passaro.elemento)
+    barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento))
+    
+    this.start = ()=>{
+        //loop do jogo
+        const temporizador = setInterval(()=>{
+            barreiras.animar()
+            passaro.animar()
+
+            /**
+             * se o passaro colidir é temporizador é zerado e não
+             * mais é executado o jogo
+             */
+            if(Colidiu(passaro, barreiras)){
+                clearInterval(temporizador)
+            }
+        },20)
+    }
+}
+
+new FlappyBird().start()
