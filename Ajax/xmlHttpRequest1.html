@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>XMLHttpRequest #01</title>
+    <link rel='stylesheet' href='css/estilo.css'>
+</head>
+
+<body class="conteudo exercicio">
+    <h1>Estados</h1>
+
+    <script>
+        /*
+            função ajax é responsável por trabalhar com os dados de forma assíncrona,
+            a mesma recebe um objeto como parâmetro onde contém url e método
+        */
+        function ajax(config) {
+            const xhr = new XMLHttpRequest()//objeto que usará os métodos de XMLHttpRequest
+            /*
+                ao abrir uma requisição assincrona, precisamos informar
+                o método como sendo get ou post, a url e se a transição será
+                async utilizando true ou false
+            */
+            xhr.open(config.metodo, config.url, true)
+
+            /*
+                função onload é carregada quando iniciar a execução
+                da instância xhr
+            */
+            xhr.onload = e => {
+                if (xhr.status === 200) {
+                    config.sucesso(xhr.response)
+                } else if (xhr.status >= 400) {
+                    config.erro({
+                        code: xhr.status,
+                        texto: xhr.statusText
+                    })
+                }
+            }
+
+            xhr.send()//envia os dados da requisição assincrona para o frontEnd
+        }
+
+        /*
+            Função básica para criação das tabelas,
+            recebe um vetor de estados e o percorre utilizando
+            um map para aplicar os dados nas linhas da planilha
+        */
+        function criarTabela(estados) {
+            const linhas = estados.map(estado => {
+                const tdId = document.createElement('td')
+                tdId.innerHTML = estado.id
+
+                const tdNome = document.createElement('td')
+                tdNome.innerHTML = estado.nome
+
+                const tdSigla = document.createElement('td')
+                tdSigla.innerHTML = estado.sigla
+
+                const tr = document.createElement('tr')
+
+                tr.appendChild(tdId)
+                tr.appendChild(tdNome)
+                tr.appendChild(tdSigla)
+
+                return tr //precisamos retornar o elemento tr com os dados ja populados
+
+            })
+
+            const tabela = document.createElement('table')
+            linhas.forEach(linha => tabela.appendChild(linha))
+            document.body.appendChild(tabela)
+        }
+
+        //utilização da função ajax criada no inicio da página, passamos um objeto como parâmetro
+        ajax({
+            //url está apontando para um json dentro da nossa pasta Ajax
+            url: "dados/estados.json",
+            metodo: "get",
+            //resposta é a response enviada caso tenha sido possível pegar os dados na url informada
+            sucesso(resposta) {
+                const estados = JSON.parse(resposta)//transforma o JSON enviado como resposta para um objeto
+                criarTabela(estados)//criar tabela irá percorrer o objeto estados e coloca-los na DOM
+
+
+            }, erro(e) {
+                const msg = document.createTextNode(`${e.codigo}: ${e.texto}`)
+                document.body.appendChild(msg)
+            }
+
+        }
+        )
+    </script>
+</body>
