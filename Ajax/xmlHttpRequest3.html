@@ -11,6 +11,51 @@
     <h1>Estados</h1>
 
     <script>
-        // ...
+        function ajax(config){
+            const xhr = new XMLHttpRequest()
+            xhr.open(config.metodo, config.url, true)
+
+            /*
+                onreadystatechange monitora os status da requisição, ajax
+                possui status que vão de 1 a 4, sendo o status 4 quando a processamento
+                foi concluído com sucesso
+            */
+            xhr.onreadystatechange = e => {
+                if(xhr.readyState === 4){
+                    if(xhr.status === 200){
+                        config.sucesso(xhr.responseXML)//xhr.responseXML é específico para arquivos XML
+                    }else if(xhr.status >= 400){
+                        config.erro({
+                            codigo: xhr.status,
+                            texto: xhr.statusText
+                        })
+                    }
+                }
+            }
+
+            xhr.send()
+        }
+
+        ajax({
+            url:"dados/estados.xml",
+            metodo:"get",
+            sucesso(resposta){
+                const estados = resposta.getElementsByTagName('estado')
+                /*
+                    usamos reduce para acomular itens <li> para depois inserirmos
+                    dentro de um <ul>, lembrando que o reduce usa o acomulador: 'html'
+                    e 'estado' é o valor atual
+                */
+                const itens = Array.from(estados).reduce(
+                    (html, estado) => html + `<li>${estado.attributes.nome.value}</li>`, ''
+                )
+                document.body.insertAdjacentHTML('beforeend', `<ul>${itens}</ul>`)
+            },
+
+            erro(e){
+                const msg = document.createTextNode(`${e.codigo}: ${e.texto}`)
+                document.body.appendChild(msg)
+            }
+        })
     </script>
 </body>

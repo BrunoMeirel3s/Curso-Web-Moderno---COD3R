@@ -11,6 +11,17 @@
     <h1>Estados</h1>
 
     <script>
-        // ...
+        const url = "dados/estados.json"
+        /*
+            fetch é uma maneira muito mais simples de se trabalhar com requisições assíncronas
+        */
+        fetch(url)
+            .then(resp => resp.json())//transforma a resp da requisição em um json que será percorrido na promisse abaixo
+            .then(estados => {
+                const itens = estados.reduce(
+                    (html, estado) => html + `<li>${estado.nome}</li>`, ''
+                )
+                document.body.insertAdjacentHTML('beforeend', `<ul>${itens}</ul>`)
+            })
     </script>
 </body>
