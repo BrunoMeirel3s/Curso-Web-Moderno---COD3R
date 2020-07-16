@@ -14,6 +14,24 @@
     <div id="post"></div>
 
     <script>
-        // ...
+        function exibirResultado(id, dados){
+            const texto = JSON.stringify(dados)//transforma os dados em um JSON
+            document.getElementById(id).innerHTML = texto
+        }
+
+        /*
+            chama o axios na url parOuImpar previamente
+            configurada no backEnd da aplicação
+        */
+        axios.get('parOuImpar', {
+            params: {//parametros da url
+                numero: 6
+            }
+        }).then(resp => exibirResultado('get', resp.data))
+
+        axios.post('formulario', {
+            nome: 'João',
+            sobrenome: 'Silva'
+        }).then(resp => exibirResultado('post', resp.data))
     </script>
 </body>

@@ -29,6 +29,53 @@
     </form>
     <div id="resultado"></div>
     <script>
-        // ...
+        /*
+            document.usuarioForm.onsubmit pega o formulário
+            na dom e intersepta o ato de submissão
+        */
+        document.usuarioForm.onsubmit = async e => {
+            e.preventDefault()
+
+            const form = e.target//elemento que disparou o evento
+            const data = new FormData(form)//data recebe todos os dados que foram preenchidos no formulário
+            data.append('ajax', true)//adiciona no final de data o dado Ajax com valor true
+
+            //options será utilizado no fetch
+            const options = {
+                method : form.method,//método de submissão do formulário
+                /*
+                  prepara os dados do formulário para serem enviado para
+                  o backend da aplicação
+                */
+                body: new URLSearchParams(data)
+            }
+
+            //form.action é a url do formulário
+            const resultado = document.getElementById('resultado')
+            /*
+                no exemplo abaixo o fetch utiliza promisses para
+                tratar os dados antes de exibi-los do frontEnd
+            */
+            //fetch(form.action, options)
+              //  .then(resp => resp.json())
+                //.then(json => {
+                  //  resultado.innerHTML = JSON.stringify(json)
+                 //})
+                //.catch(e=>{
+                  //  resultado.innerHTML = e
+                //})
+                
+                /*
+                    exemplo de fetch usando async await com try  e catch
+                */
+                try{
+                    const resp = await fetch(form.action, options)
+                    const json = await resp.json()
+                    resultado.innerHTML = JSON.stringify(json)
+                }catch(e){
+                    resultado.innerHTML = e
+                }
+
+        }
     </script>
 </body>

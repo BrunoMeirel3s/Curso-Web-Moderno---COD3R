@@ -12,6 +12,18 @@
     <h1>Estados</h1>
 
     <script>
-        // ...
+        const url = 'dados/estados.json'
+        /*
+            diferente do fetch, axios pode trabalhar com os dados
+            de um json sem chamar o resp.json para então
+            depois pegar os dados, utilizando o resp.data
+            ja teremos acesso a todos os dados
+        */
+        axios(url).then(resp => {
+            const itens = resp.data.reduce(
+                (html, estado) => html + `<li>${estado.nome}</li>`, ''
+            )
+            document.body.insertAdjacentHTML('beforeend', `<ul>${itens}</ul>`)
+        })
     </script>
 </body>

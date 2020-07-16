@@ -14,6 +14,31 @@
     <div id="post"></div>
 
     <script>
-        // ...
+        function exibirResultado(id, dados){
+            const texto = JSON.stringify(dados)//transforma os dados em um JSON
+            document.getElementById(id).innerHTML = texto
+        }
+        //lembrando que o $ representa a chamada do Jquery, não informamos o method porque por padrão o método é o get
+        $.ajax({
+            url: 'parOuImpar',
+            data: {//parametros a serem enviado para o backend
+                numero: 6
+            },success(data){//success é chamado caso o processamento tenha sido executado corretamente
+                exibirResultado('get', data)
+            }
+        })
+
+        $.ajax({
+            url:'formulario',
+            method: 'post',
+            data:{
+                nome: 'Bruno',
+                sobrenome: 'Meireles'
+            }, success(data){
+                exibirResultado('post',data)
+            }, error(e){
+                exibirResultado('post', e)
+            }
+        })
     </script>
 </body>
