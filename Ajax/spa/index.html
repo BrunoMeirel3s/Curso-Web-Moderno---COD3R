@@ -25,6 +25,41 @@
     </nav>
     <div class="pagina"></div>
     <script>
-        // ...
+        /*
+            Parametro push será utilizado para habilitação
+            de histórico de navegação na aplicação
+        */
+        function navegarViaAjax(url, seletor, push = true){
+            if(!url || !seletor) return
+            //elemento recebe o local no qual será colocado o elemento html
+            const elemento = document.querySelector(seletor)
+            fetch(url)
+                .then(resp => resp.text())//no primeiro then recebemos o conteúdo e estraímos o text que é o html
+                .then(html => {
+                    elemento.innerHTML = html
+                    //se push tiver habilitado podemos utilizar o histórico de navegação
+                    if(push){
+                        //primeiro parametro recebe um objeto que gera o histórico, o título da aplicação e a url
+                        history.pushState({seletor}, null, url)
+                    }
+                })
+        }
+
+        document.querySelectorAll('[wm-link]').forEach(link => {
+            const url = link.attributes['wm-link'].value
+            const seletorDestino = link.attributes['wm-destino'].value
+
+            link.onclick = e => {
+                e.preventDefault()
+                navegarViaAjax(url, seletorDestino)
+            }
+        })
+
+        //utilizado para remover itens do histórico após voltar
+        window.onpopstate = e => {
+            if(e.state){
+                navegarViaAjax(windows.location.href, e.state.seletor, false)
+            }
+        }
     </script>
 </body>
