@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Selecionando Elementos #01</title>
+    <link rel='stylesheet' href='css/estilo.css'>
+    <script src='js/jquery.js'></script>
+    <style>
+        .negrito {
+            font-weight: bold;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input,
+        form select,
+        form button {
+            margin: 10px;
+            font-size: 1.6em;
+        }
+    </style>
+</head>
+
+<body class='conteudo exercicio'>
+    <h1>Selecionando Elementos #01</h1>
+    <div>
+        <p>Parágrafo
+            <span class='negrito'>dentro span</span>
+        </p>
+    </div>
+    <div>
+        <ul id='feira'>
+            <li>Arroz</li>
+            <li wm-obrigatorio>Feijão</li>
+            <li class='opcional'>Carne</li>
+            <li class='opcional'>Ovo</li>
+        </ul>
+    </div>
+    <form>
+        <input type='text' name='texto'>
+        <input type='password' name='senha'>
+        <input type='checkbox' name='check1'>
+        <input type='radio' name='radio1'>
+        <input type='file' name='arquivo'>
+    </form>
+
+    <script>
+        //forma de selecionar elementos
+        $('#feira').addClass('destaque').removeClass('destaque')
+        $('li').addClass('destaque')
+        $('[wm-obrigatorio]').removeClass('destaque')
+        $('li.opcional').removeClass('destaque')
+        $('div p span').addClass('destaque')
+
+        //Exclusivos do jQuery
+        //first pega o primeiro elemento
+        $('li:first').css('border', 'solid 3px green')//inclui um atributo css no elemento selecionado
+        $('li:odd').css('border', 'solid 3px orange')//odd pega somente os ímpares
+        $('li:gt(1)').css('border', 'solid 3px white')//gt significa greater then(determinado valor)
+        $('li:not(:last)').css('border', 'none')//not específica qual elemento não irá receber
+        $('li:contains("r")').css('background-color', 'black')//seleciona os elementos que possuem o valor procurado
+
+        $('form *').hide()//seleciona todos os elementos do formulário
+        $('form :text').show()//seleciona no formulários os elementos text
+        $('form :password').show()//seleciona no formulários os elementos password
+        $('form :checkbox').show()//seleciona no formulários os elementos checkbox
+        $('form :radio').show()//seleciona no formulários os elementos radio
+        $('form :file').show()//seleciona no formulários os elementos file
+    </script>
+</body>
