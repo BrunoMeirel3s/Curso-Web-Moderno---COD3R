@@ -17,6 +17,34 @@
     <p class='numero'>5</p>
 
     <script>
-        // ...
+        $('#div1').append(', 2')
+        $('#div1').prepend('0, ')
+
+        //appendTo e prependTo precisam ser informados de uma tag, span ou div, caso contrário receberemos um erro no código
+        $('<span>, 3</span>').appendTo('#div1')//appendTo apenas é usado para primeiro definir o valor e depois selecionarmos o objeto
+        $('<span>-1, </span>').prependTo('#div1')
+
+        //before after colocam elementos antes e depois do elemento selecionado
+        $('#div2').before('<p>Antes 2</p>')
+        $('#div2').after('<p>Depois 2</p>')
+
+        //insertBefore primeiro recebe o valor a ser inserido e depois realizamos a busca do elemento
+        $('<p>Antes 3</p>').insertBefore('#div3')
+        $('<p>Depois 3</p>').insertAfter('#div3')
+
+        //$('p.numero').wrap('<div>')//wrap é utilizado para envolver o elemento por outra tag
+        $('p.numero').wrapAll('<div id="div4">')//envolve todos os elementos selecionados por uma só tag
+        $('#div4').empty()//limpa o conteúdo html
+        $('#div3, #div4').prev().remove()
+        
+        //replace all substitui os elementos selecionado
+        //$('<div>Substituto</div>').replaceAll('body > p')
+
+        $('body > p').replaceWith('<div>Substituto 2</div>')//semelhante ao replaceAll
+
+        $('body >p').replaceWith(function(){
+            //.html($(this).html()) o html do elemento atual está sendo colocado dentro do html do elemento que criamos
+           return $('<div>').html($(this).html()).append('!!!') 
+        })
     </script>
 </body>

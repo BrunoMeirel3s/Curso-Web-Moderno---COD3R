@@ -13,13 +13,27 @@
     <div id='conteudo'></div>
 
     <script>
-        const pessoas = [
-            { nome: 'Ana', nota: 9.1 },
-            { nome: 'Bianca', nota: 8.4 },
-            { nome: 'Carlos', nota: 7.6 },
-            { nome: 'Julia', nota: 9.7 }
-        ]
-        
-        // ...
+        //$(function(){}) <- colocando o código jQuery aqui ele também apenas será carregado quando o documento estiver pronto
+
+        //ready executa o código quando o document estiver pronto
+        $(document).ready(function () {
+            const pessoas = [
+                { nome: 'Ana', nota: 9.1 },
+                { nome: 'Bianca', nota: 8.4 },
+                { nome: 'Carlos', nota: 7.6 },
+                { nome: 'Julia', nota: 9.7 }
+            ]
+
+            const linhas = pessoas.map(p => {
+                const tdNome = $('<td>').append(p.nome)
+                const tdNota = $('<td>').append(p.nota)
+                return $('<tr>').append(tdNome).append(tdNota)
+            })
+
+            const tabela = $('<table>').append(linhas)
+                .css('border', 'solid 5px')
+
+            $('#conteudo').append(tabela)
+        })
     </script>
 </body>

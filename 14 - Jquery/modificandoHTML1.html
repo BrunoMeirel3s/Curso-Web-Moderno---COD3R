@@ -13,8 +13,30 @@
     <div id='conteudo1'></div>
     <div id='conteudo2'></div>
     <div id='conteudo3'></div>
+    <div>Sem id</div>
 
     <script>
-        // ...
+        //Conteúdo 1
+        $('#conteudo1').append('<p>1</p>')//adiciona um elemento no final do elemento pesquisado
+
+        //Conteúdo 2
+        const elementos = [
+            $('<li></li>').append('Arroz'),//('<tag>') utilizando o sinal <> iremos criar elementos não pesquisá-los
+            $('<li>').append('Feijão'),
+            $('<li>').append('Carne')
+        ]
+
+        //lista recebe a criação da lista com ul e no final recebe o restante dos elementos        
+        const lista = $('<ul><li>Sorvete</li></ul>').prepend(elementos)//prepend adiciona novos elementos no inicio do elemento selecionado
+        $('#conteudo2').append(lista)
+
+        //Conteúdo 3
+        $('#conteudo3').append('<h1>1</h1>')
+                .append('<h1>2</h1>').prepend('<h1>0</h1>')
+        $('#conteudo3').html('123')//html substitui os elementos presentes no elemento selecionado
+        $('#conteudo3').text('<h1>123</h1>')//text adiciona o conteúdo como se fosse um texto simples, ignorando as tags
+
+        //Alterando todos
+        $('div[id]').html('<strong>Todos!</strong>')
     </script>
 </body>
