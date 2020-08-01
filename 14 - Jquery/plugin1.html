@@ -22,6 +22,42 @@
     </div>
 
     <script>
-        // ...
+        //const  $ = {nome: 'Não é o jQuery'}
+        /*
+            Para evitar a sobrescrita da variável $, podemos executar
+            o nosso javascript dentro de uma função (function($){})(jQuery)
+            assim não será realizado a sobrescrita de $
+        */
+        (function($){
+            //usamos $.fn para deixar a função disponível como um plugin
+            $.fn.interpretar = function(){
+                //retirar chaves cria um string usando substring e pega o valor da posição 2 até o final-2
+                const retirarChaves = s => s.substring(2, s.length - 2)
+                const conteudo = $(this).html()//pega o elemento atual que está chamando o plugin
+                /*
+                    expressoesComChaves recebe todo o conteúdo que iniciar
+                    e terminar com {{}}
+                */
+                const expressoesComChaves = conteudo.match(/\{\{.+\}\}/g)
+                const expressoes = expressoesComChaves.map(retirarChaves)//expressoes recebe o conteúdo já sem as chaves
+                /*
+                    resultados recebe as exressoes sem as chaves e executa
+                    as expressoes utilizando eval()
+                */
+                const resultados = expressoes.map(e => eval(e))
+
+                
+                let conteudoFinal = conteudo
+                for(let i = 0; i < expressoesComChaves.length; i++){
+                    conteudoFinal = conteudoFinal.replace(
+                        expressoesComChaves[i], resultados[i]
+                    )
+                }
+                $(this).html(conteudoFinal)
+                return this
+            }
+        })(jQuery)
+
+        $('div').interpretar()
     </script>
 </body>

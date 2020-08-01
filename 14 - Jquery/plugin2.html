@@ -13,6 +13,10 @@
     <div></div>
     <script src="js/temporizador.js"></script>
     <script>
-        // ...
+        //temporizador recebe como parâmetro apenas a mensagem a ser exibida e o horário alvo
+        $('div').temporizador({
+            mensagem: 'Em breve um novo site para você!',
+            horario: '10:00:00'
+        }).hide().fadeIn(3000)
     </script>
 </body>

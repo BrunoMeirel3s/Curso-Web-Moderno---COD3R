@@ -23,6 +23,24 @@
     <div id='animar'>Animar!</div>
 
     <script>        
-        // ...
+        $('button').click(e => {
+            const t = 500
+            //$('#animar').hide(t).show(t) //hide e show são usados para esconder e exibir um elemento
+
+            //podemos usar o toggle tanto para esconder quanto para exibir um elemento
+            $('#animar').toggle(t).toggle(t)
+
+            //$('#animar').fadeOut(t).fadeIn(t)//fadeIn e Out fazem o elemento Aparecer e desaparecer lentamente
+            $('#animar').fadeToggle(t).fadeToggle(t)//igual o fadein e out
+
+            //slideUp e Down sobe e baixa o elemento
+            //$('#animar').slideUp(t).slideDown(t)
+
+            //semelhante ao slideUp e Down
+            $('#animar').slideToggle(t).slideToggle(t)
+
+            
+
+        })
     </script>
 </body>

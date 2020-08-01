@@ -28,6 +28,38 @@
     <div>Animar!</div>
 
     <script>
-        // ...
+        /*
+            função animate pode ser chamada usando atributos diferentes, como
+            width, top, left, transform, o que faz com que possamos
+            criar diversos efeitos de animação diferente, sempre iremos receber 
+            como parametro o valor a ser alcançado a duração de tempo até
+            chegar este valor e uma callback para ser executada no final da animação
+            que podemos usar para chamar outras animações diferentes
+        */
+        function alterarLargura(valor, duracao, callback){
+            $('div').animate({width: `+=${valor}`}, duracao, callback) //width altera a largura
+        }
+
+        function moverDiagonal(valor, duracao, callback){
+            $('div').animate({top: `+=${valor}`, left:`+=${valor}`}, duracao, callback)//juntando top e left podemos mover a animação na diagonal
+        }
+
+        function girar(valor, duracao, callback){
+            $('div').animate({transform: `+=${valor}`}, {
+                step: function(valor){
+                    $(this).css('transform', `rotate(${valor}deg)` )//this usado para aplicar a animação em cima do elemento que chamou o rotate
+                },
+                duration: duracao
+            }, 'linear', callback)//linear aqui é para a rotação ser constante
+        }
+
+        //encadeamento de chamadas das animações
+        alterarLargura(300, 100,() => {
+            alterarLargura(-300, 'slow', ()=>{
+                moverDiagonal(300, 600, ()=>{
+                    girar(3300, 3000)
+                })
+            })
+        })
     </script>
 </body>
