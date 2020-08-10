@@ -7,9 +7,17 @@ import BomDia from './componentes/BomDia'
 //import {BoaTarde, BoaNoite} from './componentes/Multiplos'
 
 import Saudacao from './componentes/Saudacao'
+import Pai from './componentes/Pai'
+import Filho from './componentes/Filho'
 
 ReactDOM.render(
     <div>
-        <Saudacao tipo ="Bom dia" nome="Bruno"/>
-    </div>    
-, document.getElementById('root'))
+        <Pai nome="Bruno" sobrenome=" Meireles">
+            {/**
+             * Como Passo os componentes Filhos aqui?
+             */}
+             <Filho nome="Jair "/>
+             <Filho nome="Lorena " sobrenome="Meireles"/>
+        </Pai>
+    </div>
+    , document.getElementById('root'))

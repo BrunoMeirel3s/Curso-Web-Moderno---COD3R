@@ -12,6 +12,14 @@ export default class Saudacao extends Component{
         tipo: this.props.tipo,
         nome: this.props.nome
     }
+    constructor(props){
+        super(props)
+        //bind é usado para mudar o contexto de execução de uma função
+        //no exemplo abaixo forçamos setTipo a ser executada no contexto
+        //da função saudação que o this atual
+        this.setTipo = this.setTipo.bind(this)
+        
+    }
     //setTipo será invocada quando houver uma mudança no input tipo
     setTipo(e){
         this.setState({tipo: e.target.value})//setState é utilizado para mudar o estado da variável tipo
@@ -33,13 +41,13 @@ export default class Saudacao extends Component{
         return(
             <div>
                 <h1>{tipo} {nome}</h1>
-                <hr/>]
+                <hr/>
                 
                 <input type="text" placeholder="Tipo..."
-                value={tipo} onChange={e =>this.setTipo(e)}/>
+                value={tipo} onChange={this.setTipo}/>
 
                 <input type="text" placeholder="Nome..." 
-                value={nome} onChange={e =>this.setNome(e)}/>
+                value={nome} onChange={e => this.setNome(e)}/>
             </div>
         )
     }
