@@ -30,8 +30,38 @@ export default class Calculator extends Component{
         this.setState({...initialState})
     }
 
+    //quando entrar no set operation espera-se que o primeiro valor já tenha sido digitado na calculadora
     setOperation(operation){
-        console.log(operation)
+        //verifica se o vetor de valores está na posição 1 se sim executa o código
+        if(this.state.current === 0){
+            this.setState({operation, current: 1, clearDisplay: true})
+        }else {
+            //se a operação atual for igual a '=' equal recebe true
+            const equals = operation === '='
+
+            //currentOperation recebe a operação atual sem ser o '='
+            const currentOperation = this.state.operation
+
+            //values recebe um spread do values contido no state
+            const values = [...this.state.values]
+            try{
+                //values[0] = Número 1 - Operação - Número 2 (Ex: values[0]= 2 + 2)
+                values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}`)    
+            }catch(e){
+                values[0] = this.state.values[0]
+            }
+            //após colocar o resultado da operação em values[0], values[1] é zerado
+            values[1] = 0
+
+            //após as operações precisamos setar os valores no state para então mudar na página
+            this.setState({
+                displayValue: values[0],
+                operation: equals ? null : operation,
+                current: equals ? 0:1,
+                clearDisplay: !equals,
+                values
+            })
+        }
     }
 
     addDigit(n){
