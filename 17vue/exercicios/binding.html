@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Binding</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <script src="/js/vue.min.js"></script>
+</head>
+<body class="exercicio">
+    <div id="app">
+        <p>{{ link }}</p>
+        <p><a href="{{link}}">Canal</a></p>
+        <!--vbind força o atributo a ser processado pelo Vue.js-->
+        <p><a v-bind:href="link">Canal</a></p>
+        <!-- ':' é a forma reduzida de chamar o vbind-->
+        <p><a :href="link">Canal</a></p>
+        <p>
+            <!--vmodel gera atualização em tempo real
+                da variável nome, conforme ajustamos no input
+                ela automaticamente atualiza no span-->
+            <input type="text" v-model="nome"><br>
+            <span>{{nome}}</span>
+        </p>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data:{
+                nome: "Maria",
+                link: "https://youtube.com/cod3rcursos"
+            },
+            /*
+                watch é utilizado para monitorar a alteração de elementos
+                como no exemplo abaixo que iremos monitorar as alterações
+                feitas no atributo nome, a cada atualização iremos chamar
+                o console.log informando no novoValor
+            */
+            watch:{
+                nome(novoValor){
+                    console.log(novoValor.toUpperCase())
+                }
+            }
+        })
+    </script>
+</body>
+</html>

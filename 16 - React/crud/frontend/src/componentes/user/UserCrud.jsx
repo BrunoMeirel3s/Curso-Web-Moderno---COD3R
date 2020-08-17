@@ -81,6 +81,7 @@ export default class UserCrud extends Component{
         this.setState({user})
     }
 
+    //renderForm é utilizado para renderizar o formulário na tela
     renderForm(){
         return(
             <div className="form">
