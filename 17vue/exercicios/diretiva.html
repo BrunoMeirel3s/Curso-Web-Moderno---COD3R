@@ -7,9 +7,31 @@
     <script src="/js/vue.min.js"></script>
 </head>
 <body class="exercicio">
-
+    <div id="app">
+        <input type="text" v-model="nome">
+        <!--v-inverter é uma diretiva vue criada no javascrit-->
+        <div v-inverter="nome"></div>
+    </div>
     <script>
-        // ...
+        /*
+            Vue.directive cria novas diretivas para usarmos no html
+        */
+        Vue.directive('inverter',{
+            //el é o elemento html que chamada a diretiva e binding é o valor recebido pela diretiva
+            componentUpdated(el, binding){
+                //binding.value transforma o valor recebido em uma String, separa, inverte e junta os elementos novamente
+                const invertido = binding.value.split('')
+                    .reverse().join('')
+                el.innerHTML = invertido    
+            }
+        })
+
+        new Vue({
+            el:"#app",
+            data: {
+                nome: ''
+            }
+        })
     </script>
 </body>
 </html>

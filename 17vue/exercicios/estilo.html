@@ -12,9 +12,24 @@
     </style>
 </head>
 <body class="exercicio">
-
+    <!--uma forma de variar a inserção de uma classe
+        é usando o uma variável que armazena true ou false
+        e mudar o valor da variável a cada click usando a negação
+        no exemplo aplicarCor recebe sua negação-->
+    <div id="app" @click="aplicarCor = !aplicarCor"
+        :class="{vermelho: aplicarCor}">
+        <!--no :class acima utilizando o ':' o class será
+            monitorado pelo Vue e podemos aplicar classes
+            de acordo com um booleano-->
+        Teste
+    </div>
     <script>
-        // ...
+        new Vue({
+            el: "#app",
+            data:{
+                aplicarCor: false
+            }
+        })
     </script>
 </body>
 </html>

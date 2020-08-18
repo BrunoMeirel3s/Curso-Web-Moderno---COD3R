@@ -7,9 +7,28 @@
     <script src="/js/vue.min.js"></script>
 </head>
 <body class="exercicio">
-
+    <div id="app">
+        <saudacao nome="Ana"></saudacao>
+        <saudacao nome="Bruno"></saudacao>
+    </div>
     <script>
-        // ...
+        /*Vue.component cria componentes que podemos utilizar
+          como tags html, o props são os atributos da tag
+          personalizada, os componentes podemos ter seu próprio
+          template para inserção de HTML na DOM*/
+        Vue.component('saudacao',{
+            props: ['nome'],
+            data: function(){
+
+            },
+            template: `
+                <div>Bom dia {{nome}}!</div>
+            `
+        })
+
+        new Vue({
+            el:"#app"
+        })
     </script>
 </body>
 </html>
