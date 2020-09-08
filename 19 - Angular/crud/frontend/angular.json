@@ -7,8 +7,8 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "inlineTemplate": true,
-          "inlineStyle": true,
+          "inlineTemplate": false,
+          "inlineStyle": false,
           "skipTests": true
         },
         "@schematics/angular:class": {
@@ -51,6 +51,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -108,6 +109,6 @@
   },
   "defaultProject": "frontend",
   "cli": {
-    "analytics": "813e57b5-7b6b-463a-8d07-8f9cb4b42ffb"
+    "analytics": "69bdde00-3a94-4723-ab97-d41e24943e69"
   }
 }
