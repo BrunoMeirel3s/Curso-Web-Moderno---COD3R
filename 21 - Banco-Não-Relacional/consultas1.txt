@@ -1,0 +1,157 @@
+-- pesquisa para encontrar apenas um resultado
+> db.estados.findOne()
+{
+        "_id" : ObjectId("5f61cc3089abf88d615cf310"),
+        "nome" : "São Paulo",
+        "sigla" : "SP",
+        "regiao" : "Sudeste",
+        "cidades" : [
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30d"),
+                        "nome" : "Campinas",
+                        "area" : 795.7,
+                        "prefeito" : "Jonas Donizette",
+                        "populacao" : 1081000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30e"),
+                        "nome" : "Guarulhos",
+                        "populacao" : 1325000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30f"),
+                        "nome" : "Sorocaba",
+                        "distanciaCapital" : 87,
+                        "populacao" : 644919
+                }
+        ]
+}
+--encontra apenas um resultado com o filtro entre parenteses
+> db.estados.findOne({sigla: "SP"})
+{
+        "_id" : ObjectId("5f61cc3089abf88d615cf310"),
+        "nome" : "São Paulo",
+        "sigla" : "SP",
+        "regiao" : "Sudeste",
+        "cidades" : [
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30d"),
+                        "nome" : "Campinas",
+                        "area" : 795.7,
+                        "prefeito" : "Jonas Donizette",
+                        "populacao" : 1081000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30e"),
+                        "nome" : "Guarulhos",
+                        "populacao" : 1325000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30f"),
+                        "nome" : "Sorocaba",
+                        "distanciaCapital" : 87,
+                        "populacao" : 644919
+                }
+        ]
+}
+
+--pesquisa utilizando o atributo or, podemos utilizar mais de um filtro para buscar os elementos
+> db.estados.find({$or: [{sigla: "SP"}, {sigla: "AC"}]}).pretty()
+{
+        "_id" : ObjectId("5f61cc3089abf88d615cf310"),
+        "nome" : "São Paulo",
+        "sigla" : "SP",
+        "regiao" : "Sudeste",
+        "cidades" : [
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30d"),
+                        "nome" : "Campinas",
+                        "area" : 795.7,
+                        "prefeito" : "Jonas Donizette",
+                        "populacao" : 1081000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30e"),
+                        "nome" : "Guarulhos",
+                        "populacao" : 1325000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30f"),
+                        "nome" : "Sorocaba",
+                        "distanciaCapital" : 87,
+                        "populacao" : 644919
+                }
+        ]
+}
+
+--pesquisar pela existencia de determinado atributo em algum elemento da tabela utilizamos o exists
+> db.estados.find({cidades: {$exists: true}})
+{ "_id" : ObjectId("5f61cc3089abf88d615cf310"), "nome" : "São Paulo", "sigla" : "SP", "regiao" : "Sudeste", "cidades" : [ { "_id" : ObjectId("5f61cc3089abf88d615cf30d"), "nome" : "Campinas", "area" : 795.7, "prefeito" : "Jonas Donizette", "populacao" : 1081000 }, { "_id" : ObjectId("5f61cc3089abf88d615cf30e"), "nome" : "Guarulhos", "populacao" : 1325000 }, { "_id" : ObjectId("5f61cc3089abf88d615cf30f"), "nome" : "Sorocaba", "distanciaCapital" : 87, "populacao" : 644919 } ] }
+
+--igual o de cima porém com a pesquisa estruturada
+> db.estados.find({cidades: {$exists: true}}).pretty()
+{
+        "_id" : ObjectId("5f61cc3089abf88d615cf310"),
+        "nome" : "São Paulo",
+        "sigla" : "SP",
+        "regiao" : "Sudeste",
+        "cidades" : [
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30d"),
+                        "nome" : "Campinas",
+                        "area" : 795.7,
+                        "prefeito" : "Jonas Donizette",
+                        "populacao" : 1081000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30e"),
+                        "nome" : "Guarulhos",
+                        "populacao" : 1325000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30f"),
+                        "nome" : "Sorocaba",
+                        "distanciaCapital" : 87,
+                        "populacao" : 644919
+                }
+        ]
+}
+--skip nos permite pular valores, podemos utilizar para paginação
+> db.estados.find({cidades: {$exists: true}}).pretty().skip(1)
+
+--limit nos permite limitar a quantidade de resultados de uma busca
+> db.estados.find({cidades: {$exists: true}}).pretty().limit(1)
+{
+        "_id" : ObjectId("5f61cc3089abf88d615cf310"),
+        "nome" : "São Paulo",
+        "sigla" : "SP",
+        "regiao" : "Sudeste",
+        "cidades" : [
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30d"),
+                        "nome" : "Campinas",
+                        "area" : 795.7,
+                        "prefeito" : "Jonas Donizette",
+                        "populacao" : 1081000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30e"),
+                        "nome" : "Guarulhos",
+                        "populacao" : 1325000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30f"),
+                        "nome" : "Sorocaba",
+                        "distanciaCapital" : 87,
+                        "populacao" : 644919
+                }
+        ]
+}
+
+--count conta a quantidade de elementos em uma tabela
+> db.estados.count()
+1
+
+--podemos mostrar valores dos objetos presentes dentro dos elementos inseridos na tabela, para isso usamos a notação ponto como abaixo:
+> db.estados.find({sigla: "SP"}, {"cidades.nome":1, _id:0 })
+{ "cidades" : [ { "nome" : "Campinas" }, { "nome" : "Guarulhos" }, { "nome" : "Sorocaba" } ] }

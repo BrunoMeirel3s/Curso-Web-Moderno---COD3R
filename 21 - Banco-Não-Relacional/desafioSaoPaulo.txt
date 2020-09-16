@@ -1,0 +1,60 @@
+Estado
+nome = São Paulo, sigla = SP, regiao = Sudeste
+    Cidades
+    nome = Campinas, area = 795.7, prefeito = Jonas Donizette, populacao = 108100
+    nome = Guarulhos, populacao = 1325000
+    nome = Sorocaba, distanciaCapital = 87, populacao = 644919
+
+Cada Cidade tem o atributo _id <-ObjectId
+
+--atributo _id gerado no código porém o mesmo pode ser gerado automaticamente ao inserir o dado
+> db.estados.insert({ 
+    nome: "São Paulo", 
+    sigla: "SP", 
+    regiao: "Sudeste", 
+    cidades: [{ 
+        _id: ObjectId()
+        , nome: "Campinas", 
+        area: 795.7, 
+        prefeito: "Jonas Donizette", 
+        populacao: 1081000 
+        },{ 
+            _id: ObjectId(), 
+            nome:"Guarulhos", 
+            populacao:1325000
+        },{
+            _id: ObjectId(), 
+            nome: "Sorocaba", 
+            distanciaCapital: 87, 
+            populacao: 644919
+
+            }]
+... })
+WriteResult({ "nInserted" : 1 })
+> db.estados.find().pretty()
+{
+        "_id" : ObjectId("5f61cc3089abf88d615cf310"),
+        "nome" : "São Paulo",
+        "sigla" : "SP",
+        "regiao" : "Sudeste",
+        "cidades" : [
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30d"),
+                        "nome" : "Campinas",
+                        "area" : 795.7,
+                        "prefeito" : "Jonas Donizette",
+                        "populacao" : 1081000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30e"),
+                        "nome" : "Guarulhos",
+                        "populacao" : 1325000
+                },
+                {
+                        "_id" : ObjectId("5f61cc3089abf88d615cf30f"),
+                        "nome" : "Sorocaba",
+                        "distanciaCapital" : 87,
+                        "populacao" : 644919
+                }
+        ]
+}
