@@ -1,0 +1,32 @@
+-- match pesquisa por um campo ou valor dentro de todos os elementos
+-- da tabela, no exemplo abaixo estamos procurando Niterói em todos
+-- os estados pela cidade que possui o valor niteroi
+
+db.estados.aggregate([
+    { $match: {"cidades.nome": "Niterói"}}
+]).pretty()
+
+{
+        "_id" : ObjectId("5f61c5ba80e6bf4baf1f1a9b"),
+        "nome" : "Rio de Janeiro",
+        "sigla" : "RJ",
+        "regiao" : "Sudeste",
+        "cidades" : [
+                {
+                        "nome" : "Niterói",
+                        "area" : 133.9,
+                        "populacao" : 487562
+                }
+        ]
+}
+
+-- unwind cria um objeto resultado para cada elemento retornado
+-- após a busca, ao invés de reunir por exemplo todos os elementos que
+-- possuem a cidade niterói em um só elemento é criado
+db.estados.aggregate([
+    { $match: {"cidades.nome": "Niterói"}},
+    {$unwind: "$cidades"}
+]).pretty()
+
+
+

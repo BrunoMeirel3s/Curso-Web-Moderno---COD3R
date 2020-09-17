@@ -1,0 +1,12 @@
+-- o comando udate nos permite setar atributos já existentes ou inserir novos
+-- atributos em uma tabela, no exemplo abaixo estamos atualizando a populacao
+-- de AL, observe que usamos o set quando formos apenas atualizar um valor existente
+> db.estados.update({sigla: "AL"}, {$set: {populacao: 487562}})
+
+-- tabém podemos  inserir novos campos na tabela utilizado para isso
+-- a busca para selecionar o elemento e depois o push para inserir
+-- a nova cidade como no exemplo abaixo
+> db.estados.update(
+... {sigla: "RJ"},
+... {$push: {cidades: {nome: "Santos", populacao: 433966}}}
+... )

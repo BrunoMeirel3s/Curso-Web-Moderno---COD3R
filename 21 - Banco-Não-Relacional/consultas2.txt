@@ -1,0 +1,39 @@
+-- aggregate é utilizado para criar uma espécie de tunel por onde os dados serão filtrados
+-- com base em funções como abaixo, a função project nos permite selecionar quais colunas iremos
+-- exibir bem como nos permite usar funções como a de soma nos elementos das colunas
+
+db.estados.aggregate([
+    { $project:{
+        nome: 1,
+        "cidades.nome":1,
+        _id: 0
+    }}
+])
+
+{ "nome" : "Acre" }
+{ "nome" : "Alagoas" }
+{ "nome" : "Rio de Janeiro", "cidades" : [ { "nome" : "Niterói" } ] }
+
+
+--$sum irá somar todos os elementos selecionados após os ':', lembrando
+-- por estar ao lado direito da expressão "cidades.populacao" deve ser chamado
+-- com '$' para mostrar que esse elemento deve ser processado
+db.estados.aggregate([
+    {$project:{populacao: {$sum:"$cidades.populacao"}, sigla: 1, _id:0}}
+])
+
+{ "sigla" : "AC", "populacao" : 0 }
+{ "sigla" : "AL", "populacao" : 0 }
+{ "sigla" : "RJ", "populacao" : 487562 }
+
+
+-- $group pode ser utilizado para agrupar todos os elementos de uma coluna por exemplo
+-- como no exemplo abaixo que é agrupado todos as populações de todos
+-- os estados, 
+db.estados.aggregate([
+    {$project:{populacao: {$sum:"$cidades.populacao"}, sigla: 1, _id:0}},
+    {$group: {_id: null, populacaoTotal: {$sum: "$populacao"}}},
+    {$project: { _id: 0, populacaoTotal: 1}}
+])
+
+{ "populacaoTotal" : 487562 }
