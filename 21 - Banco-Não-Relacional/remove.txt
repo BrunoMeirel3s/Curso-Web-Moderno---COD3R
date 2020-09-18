@@ -1,0 +1,7 @@
+--remove dentro da tabela todos os registros que possuerem
+-- a sigla em questão
+> db.estados.remove(sigla: "AC")
+
+-- remove da tabela os elementos que possuirem o atributo populacao
+--porém apenas um por vez, de acordo com o 1 no código
+ db.estados.remove({populacao:{$exists: true}}, 1)

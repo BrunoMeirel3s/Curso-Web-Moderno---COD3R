@@ -1,0 +1,12 @@
+--inserção de valor na tabela empresas apontando o campo
+-- estadoId para o id de um estado já existente
+--destad forma criamos uma espécie de relacionamento
+db.empresas.insert({
+... nome: "Bradesco",
+... estadoId: ObjectId("5f61c2ec80e6bf4baf1f1a99")
+... })
+
+db.empresas.insert({
+... nome: "Vale",
+... estadoId: ObjectId("5f61c33980e6bf4baf1f1a9a") 
+... })
