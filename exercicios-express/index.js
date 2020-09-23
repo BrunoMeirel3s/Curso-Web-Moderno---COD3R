@@ -7,6 +7,23 @@ const app = express()
 //importando o módulo saudacaoMid 
 const saudacao = require('./saudacaoMid')
 
+const usuarioApi = require('./api/usuario')
+
+const bodyParser = require('body-parser')
+
+//observe que apenas utilizamos o require e já passamos os parametros no '()', sendo app a instância do express
+require('./api/produto')(app, 'com param!')
+
+//após realizar o require da api podemos utilizar seus métodos associando a links ou chamando diretamente utilizando a notação ponto
+app.post('/usuario', usuarioApi.salvar)
+app.get('./usuario', usuarioApi.obter)
+
+//funções que permitem ao bodyParser trabalhar os tipos de arquivos que vem no corpo da requisição
+app.use(bodyParser.text())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
+
+//utilizão do midleware saudação
 app.use(saudacao('Bruno'))
 
 //req.query armazena os atributos e seus valores passados na url
@@ -20,13 +37,14 @@ app.get('/clientes/:id', (req, res) => {
 })
 
 app.post('/corpo',(req, res) =>{
-    let corpo = ''
-    req.on('data', function(parte){
-        corpo += parte
-    })
-    req.on('end', function(){
-        res.send(corpo)
-    })
+    //let corpo = ''
+    //req.on('data', function(parte){
+      //  corpo += parte
+    //})
+    //req.on('end', function(){
+     //   res.send(corpo)
+    //})
+    res.send(req.body) //resposta que está sendo enviado para o frontEnd
 })
 
 
