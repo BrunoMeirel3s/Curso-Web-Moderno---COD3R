@@ -14,6 +14,7 @@ app.db = db
 //como os arquivos da api com o arquivo de rotas por exemplo
 consign()
     .then('./config/middlewares.js')
+    .then('./api/validation.js')
     .then('./api')
     .then('./config/routes.js')
     .into(app)

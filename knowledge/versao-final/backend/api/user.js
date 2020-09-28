@@ -25,11 +25,13 @@ module.exports = app => {
 
             const userFromDB = await app.db('users')
                 .where({ email: user.email }).first()
+
             if(!user.id) {
                 notExistsOrError(userFromDB, 'Usuário já cadastrado')
             }
         } catch(msg) {
             return res.status(400).send(msg)
+            console.log('erro')
         }
 
         user.password = encryptPassword(user.password)
