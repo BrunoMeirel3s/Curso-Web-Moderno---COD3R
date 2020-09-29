@@ -9,10 +9,17 @@ module.exports = app => {
         return bcrypt.hashSync(password, salt)
     }
 
+    //função save é responsável por salvar o usuário no banco
+    //observer que usamos o async pois os acessos ao banco precisam usar await
     const save = async (req, res)=>{
+
+        //user recebe os parametros passados no corpo da requisição
         const user = { ...req.body}
+
+        //se no corpo da requisição existir id o user receberá este id
         if(req.params.id) user.id = req.params.id
 
+        //try utilizado para validar as informações passadas no frontEnd
         try{
             existsOrError(user.name, 'Nome não informado')
             existsOrError(user.email, 'E-mail não informado')
@@ -20,6 +27,7 @@ module.exports = app => {
             existsOrError(user.confirmPassword, 'Confirmação de Senha inválida')
             equalsOrError(user.password, user.confirmPassword, 'Senhas não conferem')
 
+            //obtém os emails que constam no banco para identificar se consta algum já cadastrado
             const userFromDB = await app.db('users')
                 .where({email: user.email}).first()
 
@@ -31,9 +39,11 @@ module.exports = app => {
             return res.status(400).send(msg)
         }
 
+        //realiza a criptografia da senha do usuário bem como o delete da confirmação da senha
         user.password = encryptPassword(user.password)
         delete user.confirmPassword
 
+        //Verifica se user.id já está ativo e realiza a atualização
         if(user.id){
             app.db('users')
                 .update(user)
@@ -41,6 +51,8 @@ module.exports = app => {
                 .then( _ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }else{
+
+            //caso user.id já não esteja definido então será realizado a inserção de um novo usuário
             app.db('users')
                 .insert(user)
                 .then( _ => res.status(204).send())
@@ -48,6 +60,7 @@ module.exports = app => {
         }
     }
 
+    //retorna todos os usuários do banco
     const get = (req, res) => {
         app.db('users')
             .select('id', 'name', 'email', 'admin')
@@ -55,6 +68,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
+    //retorna usuário por id
     const getById = (req, res) =>{
         app.db('users')
         .select('id', 'name', 'email', 'admin')
@@ -64,6 +78,6 @@ module.exports = app => {
         .catch(err => res.status(500).send(err))
     }
 
-
+    //após tudo precisamos retornar os métodos que poderão ser acessados no routes
     return { save, get, getById }
 }
