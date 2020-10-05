@@ -1,12 +1,19 @@
+//arquivos queries contém queries a serem utilizadas no banco
 const queries = require('./queries')
 
 module.exports = app => {
+    //métodos utilizados para validação
     const { existsOrError, notExistsOrError } = app.api.validation
 
+    //método utilizado para salvar os artigos no banco
     const save = (req, res) => {
+        //article recebe o conteúdo enviado no body da requisição
         const article = { ...req.body }
+
+        //se o id estiver setado na url article.id irá receber este id
         if (req.params.id) article.id = req.params.id
 
+        //try utilizado para validar se os campos estão preenchidos caso contrário exibe mensagem para o usuário
         try {
             existsOrError(article.name, 'Nome não informado')
             existsOrError(article.description, 'Descrição não informada')
@@ -17,13 +24,16 @@ module.exports = app => {
             res.status(400).send(msg)
         }
 
+        //se article.id já estiver setado significa que iremos realizar um update no valor
+        //por isso utilizamos o método update abaixo
         if (article.id) {
             app.db('articles')
-                .update(article)
-                .where({ id: article.id })
-                .then(_ => res.status(204).send())
+                .update(article)//atualiza o artigo conforme recebido do front-end
+                .where({ id: article.id }) //onde o id do artigo for igual ao id recebido na url
+                .then(_ => res.status(204).send())//após a atualização é retornado o código de ok
                 .catch(err => res.status(500).send(err))
         } else {
+            //caso contrário iremos inserir um novo registro no banco
             app.db('articles')
                 .insert(article)
                 .then(_ => res.status(204).send())
@@ -31,8 +41,11 @@ module.exports = app => {
         }
     }
 
+    //método utilizado para excluir artigos do banco de dados
     const remove = async (req, res) => {
         try {
+            //método para excluir um registro, no app.db('articles') é conectado a tabela de artigos
+            //no where é selecionado o id de acordo com o recebido na url e depois o .del() apaga o valor
             const rowsDeleted = await app.db('articles')
                 .where({ id: req.params.id }).del()
 
@@ -50,8 +63,11 @@ module.exports = app => {
 
     const limit = 10 //usado para paginação
     const get = async (req, res) => {
+        //page é a página atual dentro da paginação
+        //caso não seja informado no front iremos adotar a página 1
         const page = req.query.page || 1
-
+        
+        
         const result = await app.db('articles').count('id').first()
         const count = parseInt(result.count)
 
