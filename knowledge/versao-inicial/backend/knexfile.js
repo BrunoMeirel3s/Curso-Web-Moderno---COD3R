@@ -4,14 +4,10 @@
  * arquivo recebe as configurações de acesso ao banco de
  * dados
  */
-
+const {db} = require('./.env')
 module.exports = {
     client: 'postgresql',
-    connection: {
-      database: 'knowledge',
-      user:     'postgres',
-      password: 'jair140514'
-    },
+    connection: db,
     pool: {
       min: 2,
       max: 100,

@@ -19,6 +19,9 @@ module.exports = app => {
         //se no corpo da requisição existir id o user receberá este id
         if(req.params.id) user.id = req.params.id
 
+        if(!req.originalUrl.startsWith('/users')) user.admin = false
+        if(!req.user || !req.user.admin) user.admin = false
+
         //try utilizado para validar as informações passadas no frontEnd
         try{
             existsOrError(user.name, 'Nome não informado')
