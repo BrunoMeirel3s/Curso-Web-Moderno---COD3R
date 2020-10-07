@@ -12,6 +12,8 @@ module.exports = app => {
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     }
     
+    //strategy recebe os parametros acima e um middleware que contém o payload definido em auth.js
+    //onde contém as informações do usuário como id, name e outros
     const strategy = new Strategy(params, (payload, done) => {
         app.db('users')
             .where({ id: payload.id })

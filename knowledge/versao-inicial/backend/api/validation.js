@@ -6,6 +6,7 @@ module.exports = app => {
         if (typeof value === 'string' && !value.trim()) throw msg //se a String for vazia é lançado o erro
     }
 
+    //notrExistsOrError inverte o funcionamento de existOrError
     function notExistsOrError(value, msg) {
         try {
             existsOrError(value, msg)

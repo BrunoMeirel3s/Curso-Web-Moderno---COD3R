@@ -84,12 +84,17 @@ module.exports = app => {
         .catch(err => res.status(500).send(err))
     }
 
+    //método que realizar a exclusão de um usuário no banco
     const remove = async (req, res) => {
         try{
+            //primeiro é identificado se o usuário possui artigos em seu nome
             const articles = await app.db('articles')
                 .where({userId: req.params.id})
             notExistsOrError(articles, 'Usuário possui artigos.')
 
+            //perceba que o delete abaixo não deleta de fato o usuário porém adiciona
+            //em seu registro a data de sua excluão, desta forma podemos realizar um filtro
+            //na hora de listar os usuários ativos
             const rowsUpdated = await app.db('users')
                 .update({deletedAt: new Date()})
                 .where({id: req.params.id})

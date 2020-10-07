@@ -1,16 +1,24 @@
 module.exports =  app => {
+    //import dos métodos de validação
     const { existsOrError, notExistsOrError } = app.api.validation
 
     const save = (req, res) => {
+        //category recebe os dados enviados no corpo do post realizado em cima
+        //da rota que chama save
         const category = { ...req.body}
+
+        //se for enviado um id como parametro da url esse mesmo id é assumido como id de category pois posivelmente será atualizado
+        //um valor já existente no banco
         if(req.params.id) category.id = req.params.id
 
         try{
-            existsOrError(category.name, 'Não informado')
+            existsOrError(category.name, 'Não informado')//verifica se foi informado no nome da categoria ou mostra um erro
         }catch(msg){
             return res.status(400).send(msg)
         }
 
+        //se o category.id estiver preenchido significa que será realizado a atualização
+        //de um registro no banco por isso é realizado abaixo um update 
         if(category.id){
             app.db('categories')
                 .update(category)
@@ -18,6 +26,7 @@ module.exports =  app => {
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }else{
+            //caso não seja uma atualização é realizado a inserção de uma nova categoria no banco
             app.db('categories')
                 .insert(category)
                 .then(_ => res.status(204).send())
@@ -25,18 +34,26 @@ module.exports =  app => {
         }
     }
 
+    //método para realizar a remoção de categorias do banco
     const remove = async (req, res) => {
         try {
             existsOrError(req.params.id, 'Código da Categoria não informado.')
 
+            //abaixo antes de realizar a exclusão é identificado se a categoria possui atributos ligados a ela
+
+            //É pesquisado se o id da categoria a ser excluída é o parentId de alguma outra categoria
+            //o que significa que ela possui subcategorias
             const subcategory = await app.db('categories')
                 .where({ parentId: req.params.id })
             notExistsOrError(subcategory, 'Categoria possui subcategorias.')
 
+            //É pesquisado se a categoria possui artigos ligados a ela se sim é exibo o erro
             const articles = await app.db('articles')
                 .where({ categoryId: req.params.id })
             notExistsOrError(articles, 'Categoria possui artigos.')
 
+            //após as validações acima é realizado o delete da categoria de acordo com o id informado
+            //porém também é validado se foi possível realizar ou não o delete
             const rowsDeleted = await app.db('categories')
                 .where({ id: req.params.id }).del()
             existsOrError(rowsDeleted, 'Categoria não foi encontrada.')
@@ -47,6 +64,7 @@ module.exports =  app => {
         }
     }
 
+    //withPath busca o caminho completo das categorias, o que inclui toda as subcategorias
     const withPath = categories => {
 
         const getParent = (categories, parentId) =>{
@@ -77,12 +95,14 @@ module.exports =  app => {
         return categoriesWithPath
     }
 
+    //get retorna todas as categorias
     const get = (req, res) => {
         app.db('categories')
             .then(categories => res.json(withPath(categories)))
             .catch(err => res.status(500).send(err))
     }
 
+    //retorna uma categoria de acordo com o id informado
     const getById = (req, res) => {
         app.db('categories')
             .where({id: req.params.id})

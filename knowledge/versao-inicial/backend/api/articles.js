@@ -61,6 +61,7 @@ module.exports = app => {
         }
     }
 
+    
     const limit = 10 //usado para paginação
     const get = async (req, res) => {
         //page é a página atual dentro da paginação
@@ -94,9 +95,17 @@ module.exports = app => {
     const getByCategory = async (req, res) => {
         const categoryId = req.params.id
         const page = req.query.page || 1
-        const categories = await app.db.raw(queries.categoryWithChildren, categoryId)
-        const ids = categories.rows.map(c => c.id)
 
+        //categories recebe as categorias com suas subcategorias juntas, realizando uma busca que utiliza
+        //a querie que encontra-se em queries.js
+        const categories = await app.db.raw(queries.categoryWithChildren, categoryId)
+        const ids = categories.rows.map(c => c.id)//é realizado um map em cima das rows de categories para pegar somente os ids
+
+        /**
+         * Abaixo é realizado um select que busca informações em duas planilhas diferentes
+         * as planilhas articles e users, no whereRaw é definido o atributo que une as duas planilhas
+         * no caso na planilha articles é o atributo userId que é o atributo id da planilha users
+         */
         app.db({a: 'articles', u: 'users'})
             .select('a.id', 'a.name', 'a.description', 'a.imageUrl', {author: 'u.name'})
             .limit(limit).offset(page * limit - limit)
