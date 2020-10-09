@@ -7,7 +7,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state:{
-        isMenuVisible: true
+        isMenuVisible: true,
+        user:{
+            name: 'Usuário Mock',
+            email: 'mock@cod3r.com.br'
+        }
     },
     //as mutations são os métodos que ficarão disponíveis para os componentes utilizarem
     mutations:{

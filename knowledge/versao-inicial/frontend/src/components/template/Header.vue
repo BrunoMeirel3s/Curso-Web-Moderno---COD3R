@@ -6,16 +6,23 @@
         <h1 class="title">
             {{ title }}
         </h1>
+
+        <UserDropDown v-if="!hideUserDropDown"/>
     </header>
 </template>
 
 <script>
 
+//importa o componente UserDropDown para ser utilizado aqui no Header.vue
+import UserDropDown from './userDropDown'
+
 export default{
     name: 'Header',
+    components:{UserDropDown},
     props: {
         title: String,
-        hideToggle: Boolean
+        hideToggle: Boolean,
+        hideUserDropDown: Boolean
     },
     computed:{
         
@@ -67,6 +74,7 @@ export default{
     }
 
     header.header > a.toggle:hover{
+        color: white;
         background-color: rgba(0, 0, 0, 0.2);
     }
 </style>

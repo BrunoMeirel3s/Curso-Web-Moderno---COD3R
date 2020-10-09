@@ -1,4 +1,7 @@
 <template>
+    <!--
+        as tags que ficam entre a tag template são as que irão aparecer no frontEnd da aplicação
+    -->
     <footer class="footer">
         <span>Copyright<strong>Cod3r</strong> - 2020</span>
     </footer>
