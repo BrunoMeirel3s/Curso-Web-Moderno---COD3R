@@ -5,7 +5,11 @@ module.exports =  app => {
     const save = (req, res) => {
         //category recebe os dados enviados no corpo do post realizado em cima
         //da rota que chama save
-        const category = { ...req.body}
+        const category = { 
+            id: req.body.id,
+            name: req.body.name,
+            parentId: req.body.parentId
+        }
 
         //se for enviado um id como parametro da url esse mesmo id é assumido como id de category pois posivelmente será atualizado
         //um valor já existente no banco
