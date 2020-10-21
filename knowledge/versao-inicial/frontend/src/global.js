@@ -1,4 +1,6 @@
 import Vue from 'vue'
+
+export const userKey = '__knowledge_user'
 export const baseApiURL = "http://localhost:3000"
 
 export function showError(e){
@@ -11,5 +13,5 @@ export function showError(e){
     }
 }
 
-export default { baseApiURL, showError}
+export default { baseApiURL, showError, userKey}
 
