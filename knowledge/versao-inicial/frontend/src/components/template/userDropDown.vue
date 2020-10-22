@@ -9,7 +9,7 @@
         </div>
 
         <div class="user-dropdown-content">
-            <router-link to="/admin" v-if="user.admin">
+            <router-link to="/admin" v-if="user.adminmq.js">
                 <i class="fa fa-cogs"></i>Administração
             </router-link>
             <a href="" @click.prevent="logout">
