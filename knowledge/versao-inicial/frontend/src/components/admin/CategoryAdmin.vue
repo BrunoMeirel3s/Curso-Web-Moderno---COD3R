@@ -17,6 +17,10 @@
                     v-model="category.path"
                     readonly />
             </b-form-group>
+            <!--
+                Botões abaixo apenas são visíveis quando os modos forem save ou remove, o modo remove
+                o mesmo é chamado quando clicamos no botão de remover na tabela com os valores
+            -->
             <b-button variant="primary" v-if="mode === 'save'"
                 @click="save">Salvar</b-button>
             <b-button variant="danger" v-if="mode === 'remove'"
@@ -57,6 +61,13 @@ export default {
         }
     },
     methods: {
+        /**
+         * loadCategories é o método utilizado para listar as categorias do backend,
+         * é realizado uma requisição para o backend que retorna as categorias cadastradas,
+         * nesse retorno this.categories recebe um retorno de um map realizado em cima
+         * de res.data, nesse map é retornado todos os campos de category que é o próprio vetor sem o map
+         * mais o value que é category.id e text que é category.path
+         */
         loadCategories() {
             const url = `http://localhost:3000/categories`
             axios.get(url).then(res => {
@@ -66,14 +77,25 @@ export default {
                 })
             })
         },
+        //método utilizado para limpar os campos do formulário
         reset() {
             this.mode = 'save'
             this.category = {}
             this.loadCategories()
         },
+
+        /**
+         * save é utilizado para salvar ou atualizar um artigo no banco de dados, primeiramente é identificado
+         * se o atributo category.id está setado, se sim o método http será do tipo put, senão estiver setado o category.id
+         * significa que se trata de uma categoria nova, desta forma iremos utilizar o método post para envio de formulário
+         */
         save() {
-            const method = this.category.id ? 'put' : 'post'
+            const method = this.category.id ? 'put' : 'post'//verifica qual método utilizar
+
+            //se category.id estiver setado utilizamos na const id a string '/${this.article.id} senão a const id fica em branco
             const id = this.category.id ? `/${this.category.id}` : ''
+
+            //axios realiza o put ou post na url informada abaixo passando os atributos do objeto this.category
             axios[method](`http://localhost:3000/categories${id}`, this.category)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
@@ -81,6 +103,11 @@ export default {
                 })
                 .catch(showError)
         },
+        /**
+            axios.delete envia um comando de delete a url informada, como nosso backend já está esperando
+            receber algo nesta url ele irá analisar o id passado para buscar a categoria de id passada e então irá realizar o
+            delete da categoria em questão.
+         */
         remove() {
             const id = this.category.id
             axios.delete(`http://localhost:3000/categories/${id}`)
@@ -90,11 +117,14 @@ export default {
                 })
                 .catch(showError)
         },
+        //loadCategory é utilizado no botão de edição e exclusão quando é listado as categorias no frontEnd
+        //dessa forma é possível visualizar os dados antes de editar ou excluir
         loadCategory(category, mode = 'save') {
             this.mode = mode
             this.category = { ...category }
         }
     },
+     //mounted executa as funções abaixo assim que a página carregar, desta forma já teremos esses valores disponíveis para trabalhar
     mounted() {
         this.loadCategories()
     }

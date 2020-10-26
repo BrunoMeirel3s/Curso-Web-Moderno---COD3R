@@ -90,27 +90,48 @@ export default {
         }
     },
     methods: {
+        /**
+         * loadUsers é o método utilizado para listar os usuários salvos no  backend,
+         * é realizado uma requisição para o backend que retorna os usuários cadastrados,
+         * nesse retorno this.users recebe o valor retornado do backend
+         */
         loadUsers() {
             const url = `http://localhost:3000/users`
             axios.get(url).then(res => {
                 this.users = res.data
             })
         },
+
+        //método utilizado para limpar os campos do formulário
         reset() {
             this.mode = 'save'
             this.user = {}
             this.loadUsers()
         },
+        /**
+         * save é utilizado para salvar ou atualizar um usuário no banco de dados, primeiramente é identificado
+         * se o atributo user.id está setado, se sim o método http será do tipo put, senão estiver setado o user.id
+         * significa que se trata de uma categoria nova, desta forma iremos utilizar o método post para envio de formulário
+         */
         save() {
-            const method = this.user.id ? 'put' : 'post'
+            const method = this.user.id ? 'put' : 'post'//verifica qual método utilizar
+
+            //se user.id estiver setado utilizamos na const id a string '/${this.user.id} senão a const id fica em branco
             const id = this.user.id ? `/${this.user.id}` : ''
+
+            //axios realiza o put ou post na url informada abaixo passando os atributos do objeto this.user
             axios[method](`http://localhost:3000/users${id}`, this.user)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
-                    this.reset()
+                    this.reset()    
                 })
                 .catch(showError)
         },
+         /**
+            axios.delete envia um comando de delete a url informada, como nosso backend já está esperando
+            receber algo nesta url ele irá analisar o id passado para buscar o usuário de id passada e então irá realizar o
+            delete do usuário em questão caso não sejam encontrados artigos no nome do usuário
+         */
         remove() {
             const id = this.user.id
             axios.delete(`http://localhost:3000/users/${id}`)
@@ -120,11 +141,14 @@ export default {
                 })
                 .catch(showError)
         },
+        //loadUser é utilizado no botão de edição e exclusão quando é listado os usuários no frontEnd
+        //dessa forma é possível visualizar os dados antes de editar ou excluir
         loadUser(user, mode = 'save') {
             this.mode = mode
             this.user = { ...user }
         }
     },
+    //mounted executa as funções abaixo assim que a página carregar, desta forma já teremos esses valores disponíveis para trabalhar
     mounted() {
         this.loadUsers()
     }
