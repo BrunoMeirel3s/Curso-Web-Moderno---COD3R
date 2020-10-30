@@ -1,9 +1,17 @@
 <template>
+    <!--
+        Este documento é utilizado para renderizar o card com informaçao das
+        estatísticas
+    -->
     <div class="stat">
         <div class="stat-icon">
             <i :class="icon" :style="style"></i>
         </div>
         <div class="stat-info">
+            <!--
+                Os valores entre chaves são do nosso javascript, que são
+                valores passados como parametro durante a chamada deste documento
+            -->
             <span class="stat-title">{{ title }}</span>
             <span class="stat-value">{{ value }}</span>
         </div>
@@ -12,7 +20,12 @@
 <script>
 export default {
     name:'Stat',
-    props: ['title', 'value', 'icon', 'color'],
+    props: ['title', 'value', 'icon', 'color'], //atibutos que devem ser informados quando chamarmos este documento em outra página
+    /**
+     * Em computed realizamos o processamento das variáveis que assim precisarem
+     * para depois seus valores serem utilizados no frontEnd, como no exemplo abaixo que estamos 
+     * ajustando o atibuto css cor para o valor passado como atributo para Stat.vue
+     */
     computed: {
         style(){
             return "color: " + (this.color || "#000")

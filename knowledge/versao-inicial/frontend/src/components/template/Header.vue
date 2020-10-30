@@ -1,12 +1,21 @@
 <template>
+    <!--
+        Header é o elemento html que será exibido na parte superior da nossa página,
+        abaixo podemos ver na tag 'a' onde inserimos um ícone de '<' para esconder
+        o menu utilizando a função toggleMenu
+    -->
     <header class="header">
         <a class="toggle" @click="toggleMenu" v-if="!hideToggle">
             <i class="fa fa-lg" :class="icon"></i>
         </a>
+        <!--
+            no h1 abaixo exibimos o título da página utilizando o router-link
+            pedimos para quando clicarmos no título sermos direcionados para home
+        -->
         <h1 class="title">
             <router-link to="/">{{ title }}</router-link>
         </h1>
-
+        <!-- Componente html que renderiza o menu de configurações e a opção de sair-->
         <UserDropDown v-if="!hideUserDropDown"/>
     </header>
 </template>
@@ -25,11 +34,16 @@ export default{
         hideUserDropDown: Boolean
     },
     computed:{
-        
+        //trocamos o tipo  do ícone cada vez que chamamos o icon(), é realizado uma verificação no em
+        //store.js para ver se isMenuVisible é true ou false desta forma mudamos o estilo do ícone
         icon(){
             return this.$store.state.isMenuVisible ?"fa-angle-left" : "fa-angle-down"
         }
     },
+    /**
+     * toggleMenu é responsável por checar se o usuário está logado se sim ele permite que seja recolhido ou não 
+     * o menu lateral, o processamento desta verificação é executada em store.js
+     */
     methods:{
         toggleMenu(){
             this.$store.commit('toggleMenu')

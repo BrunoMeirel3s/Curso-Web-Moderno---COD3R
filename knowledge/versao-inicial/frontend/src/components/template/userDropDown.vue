@@ -1,5 +1,11 @@
 <template>
+    <!--
+        userDropDown é utiliizado como menu superior direito, onde exibe o nome 
+        do usuário bem como seu ícone, porém ao apertarmos no menu é exibido os links
+        para acesso a parte de configuração e o botão de sair da aplicação
+    -->
     <div class="user-dropdown">
+        <!--Exibe o nome do usuário e seu ícone de acordo com o gravatar-->
         <div class="user-button">
             <span class="d-none d-sm-block">{{user.name}}</span>
             <div class="user-dropdown-img">
@@ -7,7 +13,11 @@
             </div>
             <i class="fa fa-angle-down"></i>
         </div>
-
+        <!--
+            essa div recebe a class user-dropdown-content pois é nela
+            que ficará os conteúdo que serão exibidos para termos acesso a tela de adiministração
+            e ao botão de sair, utilizamos o router link para nos direcionarmos utilizando ajax
+        -->
         <div class="user-dropdown-content">
             <router-link to="/admin" v-if="user.adminmq.js">
                 <i class="fa fa-cogs"></i>Administração
@@ -30,6 +40,11 @@ export default{
     computed: mapState(['user']),
     methods: {
         logout(){
+            /**
+             * Observe que o método de logout limpa o userkey no localStorage do navegador e após isso
+             * seta o usuário como null em setUser, após isso realiza o direcionamento para a tela de login
+             * da aplicação
+             */
             localStorage.removeItem(userKey)
             this.$store.commit('setUser', null)
             this.$router.push({name:'auth'})

@@ -1,5 +1,10 @@
 <template>
   <div class="article-item">
+      <!--
+          router-link direciona para outro componente como no exemplo abaixo que direcionamos para
+          articleById passando como parametro o id do artigo, desta forma seremos direcionados para a 
+          tela de leitura do artigo que selecionarmos
+      -->
       <router-link :to="{name: 'articleById', params:{id: article.id}}">
           <div class="article-item-image d-none d-sm-block">
               <img  v-if="article.imageURL"
@@ -9,6 +14,9 @@
                     src="@/assets/article.png"
                     height="150" width="150" alt="Article">
           </div>
+          <!--
+              Dados básicos do artigo como nome, descrição e autor
+          -->
           <div class="article-item-info">
               <h2> {{ article.name}}</h2>
               <p>{{ article.description}}</p>
@@ -21,6 +29,11 @@
 </template>
 
 <script>
+/**
+    Em export default setamos os atributos que precisaremos informar
+    ao importar este componente, como o nome e o props que nada mais é do que os atributos
+    a serem preenchidos
+ */
 export default {
     name:'ArticleItem',
     props: ['article']

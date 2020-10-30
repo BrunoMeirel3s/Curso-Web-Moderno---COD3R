@@ -8,6 +8,9 @@
             <b-row>
                 <b-col md="6" sm="12">
                     <b-form-group label="Nome:" label-for="user-name">
+                        <!--
+                            readonly torna o campo somente leitura caso o mode seja igual a remove
+                        -->
                         <b-form-input id="user-name" type="text"
                             v-model="user.name" required
                             :readonly="mode === 'remove'"
