@@ -1,4 +1,9 @@
 <template>
+<!--
+  Documento principal onde irá ser importado os componetes do projeto, baixo
+  observe que chamamos tags com a inicial maiscula, essas tags são os componentes criados por 
+  nós como home, template, auth e outros.
+-->
   <div id="app" :class="{ 'hide-menu': !isMenuVisible || !user }">
     <Header
       title="Cod3r - Base de Conhecimento"
